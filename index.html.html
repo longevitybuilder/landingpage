@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Longevity Builder | Build Your Future Health</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    <style>
+        :root {
+            --neon-green: #39FF14;
+            --brand-purple: #ae15ce;
+            --dark-bg: #050505;
+            --card-bg: rgba(22, 22, 25, 0.5);
+            /* Variables for new section */
+            --pop-purple: #a855f7;
+            --text-light: #f0f0f0;
+            --text-muted: #a3a3a3;
+            --gradient-yellow: #facc15;
+            --gradient-orange: #f97316;
+            --gradient-red: #ef4444;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: #000;
+            color: #FFFFFF;
+        }
+        .hero-bg {
+             background-color: #FFFFFF;
+        }
+        .dark-bg {
+            background-color: var(--dark-bg);
+        }
+        .section-bg {
+             background-color: #000000;
+        }
+        .accent-green {
+            color: var(--neon-green);
+        }
+        .text-brand-purple {
+            color: var(--brand-purple);
+        }
+        .btn-primary {
+            background-color: #00FF00;
+            color: #000000;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: var(--neon-green);
+            transform: scale(1.05);
+        }
+        .btn-hero {
+            background-color: #000;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .btn-hero:hover {
+            background-color: var(--neon-green);
+            color: #000;
+            transform: scale(1.05);
+        }
+        .btn-purple {
+            background-color: var(--brand-purple);
+            color: #fff;
+            border: 2px solid var(--brand-purple);
+            transition: all 0.3s;
+        }
+        .btn-purple:hover {
+            background-color: #c026d3;
+            transform: scale(1.05);
+        }
+
+        /* --- Modal styles --- */
+        .modal-overlay {
+            background-color: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .info-modal-content {
+             background-color: #1a1a1a;
+        }
+         #hazardRatioChart {
+            cursor: pointer;
+        }
+        .waitlist-modal-content {
+            background-color: #1d1d1f;
+            max-width: 42rem; /* equivalent to max-w-2xl */
+        }
+
+        /* --- Transformation Engine Animation --- */
+        .animation-section-bg {
+            background-color: #050505;
+            background-image: radial-gradient(ellipse at 50% 30%, rgba(16, 32, 16, 0.25), #050505 60%);
+        }
+        .neon-green-text { color: var(--neon-green); text-shadow: 0 0 8px rgba(57, 255, 20, 0.6); }
+        .data-card { background-color: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 1rem; backdrop-filter: blur(5px); transition: all 0.5s ease; height: 100%; }
+        .human-figure-image { transition: clip-path 1.5s ease-in-out; width: 100%; max-width: 700px; height: auto; object-fit: cover; }
+        #timeline-track, #timeline-track-bottom { background-color: rgba(255, 255, 255, 0.1); }
+        #timeline-progress, #timeline-progress-bottom { background-color: #39FF14; box-shadow: 0 0 8px #39FF14; transition: width 1.5s ease-out; }
+        .timeline-marker { background-color: #050505; border: 2px solid rgba(255, 255, 255, 0.2); transition: border-color 1.5s ease; }
+        .timeline-marker.active { border-color: #39FF14; }
+        .range-bar-container { position: relative; width: 100%; padding: 10px 0; }
+        .range-bar { height: 8px; border-radius: 4px; width: 100%; }
+        .range-bar-standard, .range-bar-hdl { background-image: linear-gradient(to right, #39FF14, #facc15, #ef4444); }
+        .value-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; background-color: white; border-radius: 50%; border: 2px solid #39FF14; box-shadow: 0 0 8px #39FF14; transition: left 1.5s ease-in-out; }
+        .life-expectancy-highlight { transition: all 1.5s ease; padding: 0.25rem 0.75rem; border-radius: 0.5rem; border: 1px solid transparent; }
+        .life-expectancy-highlight.text-red-400 { border-color: rgba(248, 113, 113, 0.3); background-color: rgba(248, 113, 113, 0.1); }
+        .life-expectancy-highlight.text-yellow-400 { border-color: rgba(250, 204, 21, 0.3); background-color: rgba(250, 204, 21, 0.1); }
+        .life-expectancy-highlight.text-green-300 { border-color: rgba(134, 239, 172, 0.3); background-color: rgba(134, 239, 172, 0.1); }
+        .life-expectancy-highlight.neon-green-text { border-color: #39FF14; background-color: rgba(57, 255, 20, 0.1); }
+       
+        /* --- Longevity Graph Animation --- */
+        @keyframes draw-line { to { stroke-dashoffset: 0; } }
+        @keyframes fade-in { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fade-in-down { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slide-fade-in { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px var(--glow-color)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 8px var(--glow-color)); }
+        }
+        .animate-fade-in-down { animation: fade-in-down 1s ease-out forwards; opacity: 0; }
+        .animate-slide-fade-in { animation: slide-fade-in 0.8s ease-out forwards; opacity: 0; }
+        .graph-line { animation: draw-line 3s ease-out forwards; stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+        .marker { animation: fade-in 1s ease-in-out forwards; opacity: 0; transition: transform 0.3s ease; }
+        .marker.highlight { transform: scale(1.5); animation: pulse-glow 1.5s infinite ease-in-out; }
+        .marker:nth-of-type(1) { animation-delay: 0.5s; }
+        .marker:nth-of-type(2) { animation-delay: 1.0s; }
+        .marker:nth-of-type(3) { animation-delay: 1.5s; }
+        .marker:nth-of-type(4) { animation-delay: 2.0s; }
+        .marker:nth-of-type(5) { animation-delay: 2.5s; }
+
+        .feature-card {
+            background-color: rgba(22, 22, 25, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(57, 255, 20, 0.4);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.15);
+            transition: all 0.3s ease-in-out;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(22, 22, 25, 0.7);
+            border-color: rgba(57, 255, 20, 0.8);
+            box-shadow: 0 8px 30px rgba(57, 255, 20, 0.25);
+        }
+        
+        .chart-card {
+            background-color: rgba(22, 22, 25, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(57, 255, 20, 0.4);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.15);
+            transition: all 0.3s ease-in-out;
+        }
+        .chart-card:hover {
+            border-color: rgba(57, 255, 20, 0.8);
+            box-shadow: 0 8px 30px rgba(57, 255, 20, 0.25);
+        }
+
+        /* --- Transformative Outcomes Section --- */
+        .outcome-card {
+            background-color: rgba(22, 22, 25, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(57, 255, 20, 0.4);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.15);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+        }
+        .outcome-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .outcome-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(22, 22, 25, 0.7);
+            border-color: rgba(57, 255, 20, 0.8);
+            box-shadow: 0 8px 30px rgba(57, 255, 20, 0.25);
+        }
+        .outcome-card .outcome-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--neon-green);
+            opacity: 0;
+            transition: opacity 0.5s ease-out 0.4s;
+        }
+        .outcome-card .outcome-description {
+            color: #a0aec0;
+            opacity: 0;
+            transition: opacity 0.5s ease-out 0.6s;
+        }
+        .outcome-card.is-visible .outcome-title,
+        .outcome-card.is-visible .outcome-description {
+            opacity: 1;
+        }
+
+        /* --- Tier Card Styles --- */
+        .tier-card {
+            background-color: #161b22;
+            border: 2px solid var(--brand-purple);
+            border-radius: 1rem;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease-in-out;
+        }
+        .tier-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-green);
+            box-shadow: 0 10px 30px rgba(57, 255, 20, 0.2);
+        }
+        .tier-card ul {
+            list-style-position: inside;
+            padding-left: 0;
+        }
+        .tier-card li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* --- NEW HEALTH LAB STYLES --- */
+        #health-lab-container {
+            height: 650px;
+            position: relative;
+            background-color: #000;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(57, 255, 20, 0.5);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+            overflow: hidden;
+        }
+        .health-lab-carousel-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        .health-lab-carousel-container::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+        }
+        .health-lab-carousel-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden; /* Changed from auto to hidden */
+            padding: 1rem;
+        }
+        .health-lab-content-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        .text-bright-green { color: #00FF41; }
+
+        /* Screen 1: Home Screen */
+        #homeScreen { background-color: #000; text-align: center; }
+        .home-content { max-width: 600px; }
+        .home-logo { font-size: 2.5rem; font-weight: bold; margin-bottom: 2rem; }
+        .home-logo .longevity { color: #00FF41; }
+        .heart-container { position: relative; width: 300px; height: 300px; margin: 2rem auto; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 2px solid rgba(0, 255, 65, 0.4); box-shadow: 0 0 25px rgba(0, 255, 65, 0.5); }
+        .heart-container::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; border: 2px solid rgba(0, 255, 65, 0.4); border-radius: 50%; }
+        .heart-image { width: 200px; height: auto; animation: pulse 1.5s infinite ease-in-out; }
+        .tagline { font-size: 2.5rem; font-weight: bold; line-height: 1.2; }
+        .tagline .today { color: #00FF41; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        
+        /* Screen 3: Medicine 3.0 */
+        #medicine3Screen { background-color: #000; color: #00FF41; }
+        .medicine3-container { text-align: center; max-width: 800px; }
+        .medicine3-main-title { font-size: 2.5rem; line-height: 1.2; font-weight: 900; color: #fff; margin-bottom: 0.5rem; }
+        .medicine3-subtitle { font-size: 1.75rem; font-weight: bold; margin-bottom: 3rem; height: auto; font-family: 'Roboto Mono', monospace; color: #00FF41; }
+        .biomarkers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem 4rem; width: 100%; }
+        .biomarker-item { display: flex; align-items: center; gap: 0.75rem; font-size: 1.25rem; font-weight: 500; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+        .biomarker-item.visible { opacity: 1; transform: translateY(0); }
+        .biomarker-item svg { width: 32px; height: 32px; flex-shrink: 0; }
+        
+        /* Screen 8: VO2 Max Plan */
+        #vo2PlanScreen { background-color: #2D2D2D; }
+        .plan-container { width: 100%; max-width: 700px; background-color: #1e1e1e; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #00FF41; max-height: 90vh; overflow-y: auto; }
+        .plan-container::-webkit-scrollbar { width: 8px; }
+        .plan-container::-webkit-scrollbar-track { background: #2D2D2D; border-radius: 4px; }
+        .plan-container::-webkit-scrollbar-thumb { background-color: #00FF41; border-radius: 4px; }
+        .plan-container .hidden { display: none; }
+        .plan-title { font-size: 1.5rem; font-weight: bold; color: #fff; text-align: center; margin-bottom: 0.5rem; }
+        .plan-subtitle { font-size: 0.875rem; color: #ccc; text-align: center; margin-bottom: 1.5rem; font-weight: 300; }
+        .plan-title span { color: #00FF41; }
+        .form-group { margin-bottom: 1rem; opacity: 0; transform: translateY(20px); transition: all 0.5s ease-out; }
+        .form-group.visible { opacity: 1; transform: translateY(0); }
+        .form-label { display: block; margin-bottom: 0.5rem; color: #ccc; font-size: 0.875rem; }
+        .form-input, .form-select { width: 100%; padding: 0.75rem; background-color: #333; border: 1px solid #555; border-radius: 0.5rem; color: #fff; font-size: 0.875rem; }
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-radio { flex: 1; padding: 0.75rem; background-color: #333; border: 1px solid #555; border-radius: 0.5rem; cursor: pointer; text-align: center; transition: all 0.2s; font-size: 0.875rem;}
+        .btn-radio.selected { background-color: #00FF41; color: #000; font-weight: bold; border-color: #00FF41; box-shadow: 0 0 15px rgba(0, 255, 65, 0.5); }
+        .plan-btn { width: 100%; padding: 0.75rem; background-color: #00FF41; color: #000; font-weight: bold; border-radius: 0.5rem; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 15px rgba(0, 255, 65, 0.5); margin-top: 1rem; }
+        .plan-btn:hover { transform: scale(1.02); }
+        .loading-bar { width: 100%; height: 10px; background-color: #333; border-radius: 5px; margin: 2rem 0; overflow: hidden; }
+        .loading-bar-inner { width: 0%; height: 100%; background-color: #00FF41; animation: load 2s ease-in-out forwards; }
+        @keyframes load { to { width: 100%; } }
+        .plan-reveal-item { background-color: #222; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; opacity: 0; transform: translateX(-20px); animation: slide-in 0.5s forwards; }
+        @keyframes slide-in { to { opacity: 1; transform: translateX(0); } }
+        .plan-reveal-item .day { font-weight: bold; }
+        .plan-reveal-item .hr { color: #00FF41; }
+        .plan-reveal-item .check { color: #00FF41; opacity: 0; transition: opacity 0.5s; }
+        .plan-reveal-item.checked .check { opacity: 1; }
+        #cursor, #report-cursor { width: 12px; height: 12px; background-color: white; border-radius: 50%; position: absolute; z-index: 1000; pointer-events: none; box-shadow: 0 0 10px white, 0 0 20px white; transition: all 0.5s ease; }
+
+        /* --- Longevity Report Screen --- */
+        #longevityReportScreen { background-color: #111; }
+        .report-container { width: 100%; max-width: 800px; background-color: rgba(22, 22, 25, 0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(57, 255, 20, 0.4); box-shadow: 0 0 20px rgba(57, 255, 20, 0.15); border-radius: 1rem; padding: 2rem; }
+        .report-input-row { display: flex; align-items: center; margin-bottom: 0.75rem; }
+        .report-label { color: #ccc; font-size: 0.875rem; width: 160px; flex-shrink: 0; }
+        .report-value-box { flex-grow: 1; padding: 0.5rem 0.75rem; background-color: #333; border: 1px solid var(--neon-green); border-radius: 0.5rem; color: #fff; font-size: 0.875rem; min-height: 38px; }
+        .generating-popup { position: absolute; inset: 0; background: rgba(17, 17, 17, 0.8); backdrop-filter: blur(8px); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 2rem; border-radius: 1rem; opacity: 0; transition: opacity 0.5s ease-in-out; pointer-events: none; }
+        .ai-dots span { display: inline-block; width: 10px; height: 10px; background-color: var(--brand-purple); border-radius: 50%; margin: 0 4px; animation: ai-pulse 1.4s infinite ease-in-out both; }
+        .ai-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .ai-dots span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes ai-pulse { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
+        .report-final-screen { position: absolute; inset: 0; background: #111; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 2rem; border-radius: 1rem; opacity: 0; transition: opacity 1s ease-in-out; pointer-events: none; }
+
+        /* Embedded iframe content */
+        .embedded-content { width: 100%; height: 100%; border: none; }
+
+        /* Navigation Buttons for Health Lab Carousel */
+        .health-lab-nav-container { position: absolute; top: 50%; transform: translateY(-50%); z-index: 100; text-align: center; }
+        .health-lab-nav-button { background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: 50%; cursor: pointer; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; transition: background-color 0.3s; margin: 0 auto; }
+        .health-lab-nav-button:hover { background-color: rgba(255, 255, 255, 0.2); }
+        .health-lab-nav-text { color: #9ca3af; font-size: 0.75rem; margin-top: 0.75rem; font-family: 'Inter', sans-serif; width: 120px; line-height: 1.2; }
+
+        /* --- Track Longevity Chart Styles --- */
+        #trackLongevityScreen .chart-container-wrapper {
+            background-color: #0D1117;
+            border: 1px solid #30363d;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.25), 0 0 50px rgba(0, 255, 65, 0.15);
+        }
+        #trackLongevityScreen .chart-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        #trackLongevityScreen .chart-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.05em;
+        }
+        #trackLongevityScreen .chart-title .text-bright-green {
+            color: #00FF41;
+        }
+        #trackLongevityScreen .chart-subtitle {
+            color: #8b949e;
+            margin-top: 0.75rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.875rem;
+        }
+        #trackLongevityScreen .chart-container {
+            position: relative; 
+            height: 55vh;
+            max-height: 350px;
+            width:100%
+        }
+        #trackLongevityScreen .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        #trackLongevityScreen .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        #trackLongevityScreen .legend-color-box {
+            width: 24px;
+            height: 4px;
+            border-radius: 2px;
+        }
+        #trackLongevityScreen .graph-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+        #trackLongevityScreen .graph-line.animate {
+            animation: draw-line 4s ease-out forwards;
+        }
+        #trackLongevityScreen .marker-group, #trackLongevityScreen .label-group {
+            opacity: 0;
+        }
+        #trackLongevityScreen .marker-group.animate, #trackLongevityScreen .label-group.animate {
+            animation: fade-in 1s ease-out forwards;
+        }
+
+        /* --- NEW Abdominal Obesity Infographic Styles --- */
+        #obesity-infographic .frosted-glass-container {
+            background: rgba(27, 27, 27, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--neon-green);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 0 40px rgba(57, 255, 20, 0.2);
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        #obesity-infographic .infographic-container {
+            position: relative;
+            width: 100%;
+            max-width: 850px;
+            height: 600px;
+            margin: auto;
+        }
+        #obesity-infographic .central-hub {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            text-align: center;
+        }
+        #obesity-infographic .central-hub img {
+            width: 220px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(57, 255, 20, 0.5));
+            animation: pulse-center 5s infinite ease-in-out;
+        }
+        @keyframes pulse-center {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        #obesity-infographic .risk-node {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            width: 100px;
+            text-align: center;
+            z-index: 10;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: pop-in 0.5s forwards;
+        }
+        #obesity-infographic .risk-node .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--neon-green);
+            background-color: rgba(57, 255, 20, 0.1);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+        }
+        #obesity-infographic .risk-node:hover .icon-wrapper {
+            transform: scale(1.15);
+            background-color: rgba(168, 85, 247, 0.2);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+            border-color: var(--pop-purple);
+        }
+        #obesity-infographic .risk-node:hover .icon-wrapper svg {
+            color: var(--pop-purple);
+        }
+        #obesity-infographic .risk-node .icon-wrapper svg {
+            width: 30px;
+            height: 30px;
+            color: var(--neon-green);
+            transition: color 0.3s ease;
+        }
+        #obesity-infographic .risk-node .label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            line-height: 1.2;
+        }
+        #obesity-infographic .connecting-line {
+            stroke-width: 2.5;
+            fill: none;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw-line 3s forwards ease-out;
+        }
+        @keyframes pop-in {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        /* Modal Styles for Obesity Infographic */
+        .obesity-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 60; /* Higher z-index */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .obesity-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .obesity-modal-content {
+            background-color: #1c1c1c;
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 50px rgba(57, 255, 20, 0.5);
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.3s ease;
+        }
+        .obesity-modal-overlay.active .obesity-modal-content {
+            transform: scale(1) translateY(0);
+        }
+        .obesity-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.2s, transform 0.2s;
+        }
+        .obesity-modal-close:hover {
+            color: var(--text-light);
+            transform: rotate(90deg);
+        }
+
+    </style>
+</head>
+<body class="bg-black">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-bg text-black py-12 lg:py-16">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-4">Stop "Trying to Be Healthy." Start Building a Longer Life.</h1>
+            <p class="text-lg md:text-xl text-gray-800 mb-8 max-w-3xl mx-auto">Discover the single, science-based tactic that gives you a 400% greater survival advantage and has been clinically shown to reduce your risk of premature death by up to 61%.</p>
+            <div class="inline-block text-lg font-bold py-4 px-10 rounded-full btn-hero open-waitlist-modal">Join the Waitlist & Get a Lifetime Founder's Offer</div>
+            <p class="text-sm text-gray-600 mt-3 dynamic-counter">Join 3,737+ others. Click the button.</p>
+             <div class="mt-12">
+                <img src="https://i.imgur.com/Aqk9XPj.png" alt="Longevity Builder Book and Software Box" class="rounded-lg w-full max-w-4xl mx-auto">
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="section-bg py-16 lg:py-24">
+        <div class="w-full max-w-7xl mx-auto container px-6">
+            <div class="text-center mb-12 md:mb-20">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white animate-fade-in-down" style="animation-delay: 0.1s;">The Longevity Crisis is Here.</h2>
+                <p class="max-w-3xl mx-auto text-gray-300 text-base md:text-lg animate-fade-in-down" style="animation-delay: 0.3s;">
+                    We are drowning in conflicting health advice, leaving us confused and paralyzed. While we chase the next 'superfood' or 'biohack', a silent epidemic is unfolding. By 40, most adults begin developing a chronic disease every decade—illnesses like heart disease and diabetes that grow silently over time. The map we've been given is wrong, but the good news is that when detected early, this process can often be reversed.
+                </p>
+            </div>
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
+                <div class="w-full lg:w-2/3 relative">
+                    <svg class="w-full" viewBox="0 0 600 350" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <linearGradient id="lineGradientNew" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#4ade80;" />
+                                <stop offset="50%" style="stop-color:#facc15;" />
+                                <stop offset="100%" style="stop-color:#ef4444;" />
+                            </linearGradient>
+                            <filter id="glowNew" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <line x1="40" y1="20" x2="40" y2="310" stroke="#4a5568" stroke-width="1"/>
+                        <text x="30" y="160" fill="#a0aec0" font-size="12" transform="rotate(-90 30 160)" text-anchor="middle" class="uppercase tracking-widest">Quality of Life</text>
+                        <line x1="40" y1="310" x2="580" y2="310" stroke="#4a5568" stroke-width="1"/>
+                        <text x="310" y="340" fill="#a0aec0" font-size="12" text-anchor="middle" class="uppercase tracking-widest">Age</text>
+                        <path class="graph-line" d="M 50 50 C 150 55, 200 100, 280 160 S 400 240, 550 280" stroke="url(#lineGradientNew)" stroke-width="4" fill="none" filter="url(#glowNew)" stroke-linecap="round"/>
+                        <g id="marker-1" class="marker" style="--glow-color: #4ade80;"><circle cx="50" cy="50" r="8" fill="#000" stroke="#4ade80" stroke-width="3"/><circle cx="50" cy="50" r="4" fill="#4ade80"/></g>
+                        <g id="marker-2" class="marker" style="--glow-color: #a3e635;"><line x1="165" y1="65" x2="165" y2="310" stroke="#4a5568" stroke-width="1" stroke-dasharray="4 4"/><circle cx="165" cy="65" r="8" fill="#000" stroke="#a3e635" stroke-width="3"/><circle cx="165" cy="65" r="4" fill="#a3e635"/></g>
+                        <g id="marker-3" class="marker" style="--glow-color: #facc15;"><line x1="280" y1="160" x2="280" y2="310" stroke="#4a5568" stroke-width="1" stroke-dasharray="4 4"/><circle cx="280" cy="160" r="8" fill="#000" stroke="#facc15" stroke-width="3"/><circle cx="280" cy="160" r="4" fill="#facc15"/></g>
+                        <g id="marker-4" class="marker" style="--glow-color: #f97316;"><line x1="415" y1="240" x2="415" y2="310" stroke="#4a5568" stroke-width="1" stroke-dasharray="4 4"/><circle cx="415" cy="240" r="8" fill="#000" stroke="#f97316" stroke-width="3"/><circle cx="415" cy="240" r="4" fill="#f97316"/></g>
+                        <g id="marker-5" class="marker" style="--glow-color: #ef4444;"><line x1="550" y1="280" x2="550" y2="310" stroke="#4a5568" stroke-width="1" stroke-dasharray="4 4"/><circle cx="550" cy="280" r="8" fill="#000" stroke="#ef4444" stroke-width="3"/><circle cx="550" cy="280" r="4" fill="#ef4444"/></g>
+                        <g font-size="12" fill="#a0aec0" text-anchor="middle"><text x="100" y="325">40 years old</text><text x="280" y="325">60 years old</text><text x="460" y="325">80 years old</text></g>
+                    </svg>
+                </div>
+                <div class="w-full lg:w-1/3 space-y-4">
+                    <div id="list-item-1" class="flex items-center gap-4 p-4 rounded-lg bg-gray-900/50 animate-slide-fade-in transition-all duration-300 hover:bg-gray-800" style="animation-delay: 1.0s;"><div class="w-10 h-10 flex-shrink-0" style="filter: drop-shadow(0 0 5px rgba(74, 222, 128, 0.5));"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-green-400"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg></div><div><h3 class="font-semibold text-lg">Poor Metabolic Health</h3><p class="text-gray-400">2 in 3 people</p></div></div>
+                    <div id="list-item-2" class="flex items-center gap-4 p-4 rounded-lg bg-gray-900/50 animate-slide-fade-in transition-all duration-300 hover:bg-gray-800" style="animation-delay: 1.2s;"><div class="w-10 h-10 flex-shrink-0" style="filter: drop-shadow(0 0 5px rgba(163, 230, 53, 0.5));"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-lime-400"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" /></svg></div><div><h3 class="font-semibold text-lg">High Cholesterol & Blood Pressure</h3><p class="text-gray-400">3 in 4 people</p></div></div>
+                    <div id="list-item-3" class="flex items-center gap-4 p-4 rounded-lg bg-gray-900/50 animate-slide-fade-in transition-all duration-300 hover:bg-gray-800" style="animation-delay: 1.4s;"><div class="w-10 h-10 flex-shrink-0" style="filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.5));"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-yellow-400"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.092 1.21-.138 2.43-.138 3.662a48.678 48.678 0 0 0 7.462 0Zm-1.862 0a51.75 51.75 0 0 1-3.731 0" /><path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" /></svg></div><div><h3 class="font-semibold text-lg">Mobility Loss and Fractures</h3><p class="text-gray-400">2 in 3 people</p></div></div>
+                    <div id="list-item-4" class="flex items-center gap-4 p-4 rounded-lg bg-gray-900/50 animate-slide-fade-in transition-all duration-300 hover:bg-gray-800" style="animation-delay: 1.6s;"><div class="w-10 h-10 flex-shrink-0" style="filter: drop-shadow(0 0 5px rgba(249, 115, 22, 0.5));"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-orange-500"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.37-3.37 8.257 8.257 0 0 0 3-.018ZM15.362 5.214A8.252 8.252 0 0 0 12 3a8.25 8.25 0 0 0-5.962 14.953 8.287 8.287 0 0 1-2.927-2.927A8.252 8.252 0 0 1 8.638 5.214Z" /></svg></div><div><h3 class="font-semibold text-lg">Cancer</h3><p class="text-gray-400">2 in 5 people</p></div></div>
+                    <div id="list-item-5" class="flex items-center gap-4 p-4 rounded-lg bg-gray-900/50 animate-slide-fade-in transition-all duration-300 hover:bg-gray-800" style="animation-delay: 1.8s;"><div class="w-10 h-10 flex-shrink-0" style="filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.5));"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-red-500"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" /></svg></div><div><h3 class="font-semibold text-lg">Dementia & Alzheimer's</h3><p class="text-gray-400">1 in 5 people</p></div></div>
+                </div>
+            </div>
+            <div class="text-center mt-16 max-w-5xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">The Solution: Become a <span class="text-brand-purple">Longevity Builder</span></h2>
+                <p class="max-w-3xl mx-auto text-gray-300 text-lg mb-8">The secret isn’t a new diet or a miracle supplement. It’s a shift in identity, backed by science. A Longevity Builder focuses on one single, trainable metric—<span class="accent-green">your Oxygen Efficiency Score (VO2 Max)</span>—to systematically rebuild your body and create an internal environment hostile to disease.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                    <div class="feature-card p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold mb-2 accent-green">Prioritize Evidence</h3>
+                        <p class="text-gray-400">Stop following fads. Make decisions guided by decades of peer-reviewed research and hard data.</p>
+                    </div>
+                    <div class="feature-card p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold mb-2 accent-green">Build Consistency</h3>
+                        <p class="text-gray-400">Health is not a sprint; it’s the act of laying one perfect brick every day. Aim for consistency over fleeting intensity.</p>
+                    </div>
+                    <div class="feature-card p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold mb-2 accent-green">Take Action</h3>
+                        <p class="text-gray-400">Good intentions don’t lower cholesterol. The only thing that moves the needle is action.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="dark-bg py-16 lg:py-20">
+        <div class="container mx-auto px-6 text-center">
+             <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4 neon-green-text">The Solution: Stop Majoring in the Minors</h2>
+            <div class="max-w-3xl mx-auto">
+                <p class="text-lg text-gray-400 mb-12">The data shows one factor has a <span class="font-bold text-brand-purple">400% greater impact</span> on your risk of dying than anything else. By focusing on this single metric, we can build a powerful defense against chronic disease. Click on a bar to learn more.</p>
+            </div>
+            <div class="chart-card p-8 rounded-2xl h-[550px] relative max-w-5xl mx-auto">
+                <canvas id="hazardRatioChart"></canvas>
+            </div>
+            <div class="text-center mt-16">
+                <div class="inline-block text-lg font-bold py-4 px-10 rounded-full btn-hero open-waitlist-modal">New Book & Longevity Health Lab</div>
+                <p class="text-sm text-gray-500 mt-2 dynamic-counter">Join 3,737+ others. Click the button.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works / Transformation Animation Section -->
+    <section class="animation-section-bg py-16 lg:py-20">
+        <div class="container mx-auto px-6">
+             <header class="w-full max-w-7xl mx-auto mb-12 text-center">
+                <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white">Scientists Discover the <span class="neon-green-text">Single Biomarker</span> That Controls Human Lifespan</h2>
+                <p class="text-gray-400 font-light mt-4 max-w-3xl mx-auto">Watch the animation to see how your body creates a higher life expectancy. With Longevity Builder your biomarkers will improve over one year, reducing your risk of the 'Big Four': Excess Weight, Cardiovascular Events, High Blood Sugar, and Metabolic Syndrome.</p>
+           </header>
+           
+           <div class="chart-card p-8 rounded-2xl max-w-5xl mx-auto">
+               <main class="w-full mx-auto flex-grow flex flex-col items-center justify-center">
+                    <!-- Timeline Top -->
+                    <div class="w-full max-w-4xl mx-auto mb-10">
+                        <div class="flex justify-center mb-2">
+                             <div class="text-center">
+                                <span class="text-gray-400 font-medium">Life Expectancy Gain:</span>
+                                <div class="mt-1"><span id="le-b" class="data-value life-expectancy-highlight text-2xl font-black">Baseline</span></div>
+                            </div>
+                        </div>
+                        <div id="timeline-track" class="relative w-full h-2 rounded-full">
+                            <div id="timeline-progress" class="absolute top-0 left-0 h-2 rounded-full"></div>
+                            <div class="absolute w-full h-full flex justify-between items-center">
+                                <div id="marker-0" class="timeline-marker w-4 h-4 rounded-full"></div>
+                                <div id="marker-1" class="timeline-marker w-4 h-4 rounded-full"></div>
+                                <div id="marker-2" class="timeline-marker w-4 h-4 rounded-full"></div>
+                                <div id="marker-3" class="timeline-marker w-4 h-4 rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="w-full flex justify-between text-xs text-gray-400 mt-2">
+                            <span>Day 0</span>
+                            <span>Day 90</span>
+                            <span>Day 180</span>
+                            <span>Day 365</span>
+                        </div>
+                    </div>
+
+                    <!-- Center: Human Figure Container -->
+                    <div id="human-figure-container" class="relative inline-block">
+                         <img id="male-figure-image" class="human-figure-image" src="https://i.imgur.com/fxUGc94.png" alt="Male figure transforming from old to young" onerror="this.onerror=null;this.src='https://placehold.co/700x350/050505/ffffff?text=Figure';">
+                         <img id="female-figure-image" class="human-figure-image hidden" src="https://i.imgur.com/E9LpOzK.png" alt="Female figure transforming from old to young" onerror="this.onerror=null;this.src='https://placehold.co/700x350/050505/ffffff?text=Figure';">
+                    </div>
+
+                    <!-- Timeline Bottom -->
+                    <div class="w-full max-w-4xl mx-auto mt-10 mb-10">
+                        <div class="flex justify-center mb-2">
+                             <div class="text-center">
+                                <span class="text-gray-400 font-medium">Life Expectancy Gain:</span>
+                                <div class="mt-1"><span id="le-b-bottom" class="data-value life-expectancy-highlight text-2xl font-black">Baseline</span></div>
+                            </div>
+                        </div>
+                        <div id="timeline-track-bottom" class="relative w-full h-2 rounded-full">
+                            <div id="timeline-progress-bottom" class="absolute top-0 left-0 h-2 rounded-full"></div>
+                            <div class="absolute w-full h-full flex justify-between items-center">
+                                <div id="marker-0-bottom" class="timeline-marker w-4 h-4 rounded-full"></div>
+                                <div id="marker-1-bottom" class="timeline-marker w-4 h-4 rounded-full"></div>
+                                <div id="marker-2-bottom" class="timeline-marker w-4 h-4 rounded-full"></div>
+                                <div id="marker-3-bottom" class="timeline-marker w-4 h-4 rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="w-full flex justify-between text-xs text-gray-400 mt-2">
+                            <span>Day 0</span>
+                            <span>Day 90</span>
+                            <span>Day 180</span>
+                            <span>Day 365</span>
+                        </div>
+                    </div>
+               </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transformative Outcomes Section -->
+    <section id="transformative-outcomes" class="dark-bg py-16 lg:py-24">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">The Transformative Health Outcomes of a Longevity Builder</h2>
+                <p class="max-w-3xl mx-auto text-gray-300 text-lg">By focusing on the "One Single Tactic" of incrementally raising your Oxygen Efficiency Score, you can achieve the following reductions in clinical risk and complications.</p>
+            </div>
+            <div id="outcomes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="outcome-card">
+                    <h3 class="outcome-title">Premature Death: 61% Less Risk</h3>
+                    <p class="outcome-description">Be at 61% total less risk from all causes of mortality.</p>
+                </div>
+                <div class="outcome-card">
+                    <h3 class="outcome-title">Diabetes: 54% Decrease</h3>
+                    <p class="outcome-description">See a 54% decrease in complications from this disease that damages your entire artery network.</p>
+                </div>
+                <div class="outcome-card">
+                    <h3 class="outcome-title">Dementia: 50% Reduction</h3>
+                    <p class="outcome-description">Get a 50% reduction in risk of developing this neurodegenerative disease for which there is no cure.</p>
+                </div>
+                <div class="outcome-card">
+                    <h3 class="outcome-title">Fatty Liver: 17x Less Risk</h3>
+                    <p class="outcome-description">Be at 17 times less risk than others of developing this deadly disease driven by metabolic syndrome.</p>
+                </div>
+                <div class="outcome-card">
+                    <h3 class="outcome-title">Heart Attack: 41% Reduction</h3>
+                    <p class="outcome-description">A 41% reduction in clinical risk from the number one cause of death worldwide for men and women.</p>
+                </div>
+                <div class="outcome-card">
+                    <h3 class="outcome-title">Obesity: 30% Reduction</h3>
+                    <p class="outcome-description">A 30% reduction in clinical complications from a condition that has grown to affect almost 70% of adults.</p>
+                </div>
+                <div class="outcome-card">
+                    <h3 class="outcome-title">High Blood Pressure: 30% Less Complications</h3>
+                    <p class="outcome-description">See 30% less complications from this "silent" disease that damages your organs without you feeling it.</p>
+                </div>
+                <div class="outcome-card">
+                    <h3 class="outcome-title">Atrial Fibrillation: 30% Reduction</h3>
+                    <p class="outcome-description">A 30% reduction in risk of an attack.</p>
+                </div>
+                <div class="outcome-card">
+                    <h3 class="outcome-title">Depression: 26% Lower Odds</h3>
+                    <p class="outcome-description">See 26% lower odds of developing it.</p>
+                </div>
+                <div class="outcome-card">
+                    <h3 class="outcome-title">Heart Bypass: 22% Reduction</h3>
+                    <p class="outcome-description">A 22% reduction in risk of needing this emergency surgery.</p>
+                </div>
+                <div class="outcome-card">
+                    <h3 class="outcome-title">Cancer Risk: 15% Less Risk</h3>
+                    <p class="outcome-description">Be at 15% less risk of diagnosis from the second leading cause of death worldwide.</p>
+                </div>
+            </div>
+            <div class="text-center mt-16">
+                <div class="inline-block text-lg font-bold py-4 px-10 rounded-full btn-hero open-waitlist-modal">New Book & Longevity Health Lab</div>
+                <p class="text-sm text-gray-500 mt-2 dynamic-counter">Join 3,737+ others. Click the button.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Health Lab Section -->
+    <section id="health-lab" class="dark-bg py-16 lg:py-24">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Inside the <span class="text-brand-purple">Longevity Builder</span> Health Lab</h2>
+                <p class="max-w-3xl mx-auto text-gray-300 text-lg">
+                    A mission control center for your health. Track what matters, get personalized insights, and follow a science-backed plan to build a longer, healthier life.
+                </p>
+            </div>
+
+            <div id="health-lab-container">
+                <div class="health-lab-carousel-container" id="health-lab-carousel">
+                    <!-- Screen 1: Home -->
+                    <div class="health-lab-carousel-slide" id="homeScreen">
+                        <div class="health-lab-content-wrapper">
+                            <div class="home-content">
+                                <div class="home-logo">
+                                    <span class="longevity">Longevity</span> Builder Health Lab
+                                </div>
+                                <div class="heart-container">
+                                    <img src="https://i.imgur.com/rMOofjo.png" alt="Pulsating Heart" class="heart-image" onerror="this.onerror=null;this.src='https://placehold.co/250x250/000000/FFFFFF?text=Heart';">
+                                </div>
+                                <div class="tagline">
+                                    <div>Track Longevity In <span class="today">Real Time</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Screen 2: Track Longevity Chart -->
+                    <div class="health-lab-carousel-slide" id="trackLongevityScreen">
+                         <div class="health-lab-content-wrapper">
+                            <div class="chart-container-wrapper">
+                                <div class="chart-header">
+                                    <h1 class="chart-title">Track Your Health In <span class="text-bright-green">Real Time</span> Inside The Lab</h1>
+                                    <p class="chart-subtitle">As your AQ Points increase so to does your VO2 Max. You will see your biomarkers improve as well. This means your longevity increases</p>
+                                </div>
+                                <div class="chart-container">
+                                    <svg id="health-tracker-svg" class="w-full h-full" viewBox="0 0 700 400">
+                                        <defs>
+                                            <linearGradient id="aqGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#00FF41" />
+                                                <stop offset="50%" stop-color="#facc15" />
+                                                <stop offset="100%" stop-color="#ef4444" />
+                                            </linearGradient>
+                                            <linearGradient id="vo2Gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                 <stop offset="0%" stop-color="#c084fc" />
+                                                 <stop offset="50%" stop-color="#00FF41" />
+                                                 <stop offset="100%" stop-color="#f97316" />
+                                            </linearGradient>
+                                            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                                                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                                <feMerge>
+                                                    <feMergeNode in="coloredBlur"/>
+                                                    <feMergeNode in="SourceGraphic"/>
+                                                </feMerge>
+                                            </filter>
+                                        </defs>
+                                        <g class="axis" stroke="#4a5568" stroke-width="2">
+                                            <line x1="50" y1="20" x2="50" y2="350" />
+                                            <line x1="50" y1="350" x2="650" y2="350" />
+                                        </g>
+                                        <text x="35" y="185" fill="#a0aec0" font-size="12" transform="rotate(-90 35 185)" text-anchor="middle" class="uppercase tracking-widest">Your Health Biomarkers</text>
+                                        <g class="x-labels" font-family="'Roboto Mono', monospace" font-size="12" fill="#a0aec0" text-anchor="middle">
+                                            <text x="50" y="370">0 days</text>
+                                            <text x="200" y="370">90 days</text>
+                                            <text x="350" y="370">180 days</text>
+                                            <text x="500" y="370">270 days</text>
+                                            <text x="650" y="370">365 days</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <div class="chart-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color-box" style="background: linear-gradient(90deg, #00FF41, #facc15, #ef4444);"></div>
+                                        <span>Activity Quotient Tracking</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color-box" style="background: linear-gradient(90deg, #c084fc, #00FF41, #f97316);"></div>
+                                        <span>VO2 Max (Oxygen Efficiency)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Screen 3: Blood Panel Animation -->
+                    <div class="health-lab-carousel-slide" id="bloodPanelScreen">
+                        <div class="w-full max-w-3xl mx-auto">
+                            <div class="chart-card p-6 rounded-2xl">
+                                <div class="text-center mb-8">
+                                    <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight">Track Your Health In <span class="text-bright-green">Real Time</span> Inside The Lab</h1>
+                                    <p class="text-gray-400 mt-2">Your Biomarkers Becoming More Optimal As You Use The Longevity Health Lab</p>
+                                </div>
+                                 <div class="space-y-3 text-sm">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="font-bold"><span class="text-gray-400 font-medium">VO2 Max: </span><span id="vo2-b-carousel" class="data-value">28.0</span></div>
+                                        <div class="font-bold text-right"><span class="text-gray-400 font-medium">Blood Pressure: </span><span id="bp-b-carousel" class="data-value">145/90</span></div>
+                                    </div>
+                                    <div class="space-y-2 pt-2">
+                                        <div class="biomarker-container"><div class="flex justify-between items-end"><span class="text-gray-400 font-medium">LDL Cholesterol:</span><span id="ldl-b-value-carousel" class="font-bold data-value text-right"></span></div><div class="range-bar-container"><div class="range-bar range-bar-standard"></div><div id="ldl-marker-carousel" class="value-marker"></div></div><div class="flex justify-between text-xs text-gray-500 -mt-2"><span>Optimal</span><span>High Risk</span></div></div>
+                                        <div class="biomarker-container"><div class="flex justify-between items-end"><span class="text-gray-400 font-medium">HDL Cholesterol:</span><span id="hdl-b-value-carousel" class="font-bold data-value text-right"></span></div><div class="range-bar-container"><div class="range-bar range-bar-hdl"></div><div id="hdl-marker-carousel" class="value-marker"></div></div><div class="flex justify-between text-xs text-gray-500 -mt-2"><span>Optimal</span><span>High Risk</span></div></div>
+                                        <div class="biomarker-container"><div class="flex justify-between items-end"><span class="text-gray-400 font-medium">Triglycerides:</span><span id="trig-b-value-carousel" class="font-bold data-value text-right"></span></div><div class="range-bar-container"><div class="range-bar range-bar-standard"></div><div id="trig-marker-carousel" class="value-marker"></div></div><div class="flex justify-between text-xs text-gray-500 -mt-2"><span>Optimal</span><span>High Risk</span></div></div>
+                                        <div class="biomarker-container"><div class="flex justify-between items-end"><span class="text-gray-400 font-medium">Fasting Insulin:</span><span id="insulin-b-value-carousel" class="font-bold data-value text-right"></span></div><div class="range-bar-container"><div class="range-bar range-bar-standard"></div><div id="insulin-marker-carousel" class="value-marker"></div></div><div class="flex justify-between text-xs text-gray-500 -mt-2"><span>Optimal</span><span>High Risk</span></div></div>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Screen 4: Longevity Report Generator -->
+                    <div class="health-lab-carousel-slide" id="longevityReportScreen">
+                        <div class="health-lab-content-wrapper">
+                            <div class="report-container relative">
+                                <div id="report-form-container">
+                                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight text-center mb-4">Generate Your Personal <span class="accent-green">Longevity Report</span> Inside The Lab</h2>
+                                    <div class="space-y-2">
+                                        <div class="report-input-row"><span class="report-label">Name:</span><div id="report-name" class="report-value-box"></div></div>
+                                        <div class="report-input-row"><span class="report-label">Age:</span><div id="report-age" class="report-value-box"></div></div>
+                                        <div class="report-input-row"><span class="report-label">Total Cholesterol:</span><div id="report-total-chol" class="report-value-box"></div></div>
+                                        <div class="report-input-row"><span class="report-label">LDL Cholesterol:</span><div id="report-ldl" class="report-value-box"></div></div>
+                                        <div class="report-input-row"><span class="report-label">Triglycerides:</span><div id="report-trig" class="report-value-box"></div></div>
+                                        <div class="report-input-row"><span class="report-label">HDL Cholesterol:</span><div id="report-hdl" class="report-value-box"></div></div>
+                                        <div class="report-input-row"><span class="report-label">Insulin:</span><div id="report-insulin" class="report-value-box"></div></div>
+                                        <div class="report-input-row"><span class="report-label">Blood Pressure:</span><div id="report-bp" class="report-value-box"></div></div>
+                                        <div class="report-input-row"><span class="report-label">VO2 Max:</span><div id="report-vo2" class="report-value-box"></div></div>
+                                    </div>
+                                </div>
+                                <div id="generating-popup" class="generating-popup">
+                                    <h3 class="text-2xl font-bold text-white mb-4">Generate My Personal Longevity Report</h3>
+                                    <div class="ai-dots"><span></span><span></span><span></span></div>
+                                </div>
+                                <div id="report-final-screen" class="report-final-screen">
+                                    <img src="https://i.imgur.com/rMOofjo.png" alt="Beating Heart" class="w-48 h-auto mb-6 heart-image" onerror="this.onerror=null;this.src='https://placehold.co/192x192/111111/FFFFFF?text=Heart';">
+                                    <h2 class="text-4xl font-black text-white">Get your full <span class="text-brand-purple">Longevity Report</span> inside the lab.</h2>
+                                </div>
+                            </div>
+                            <div id="report-cursor"></div>
+                        </div>
+                    </div>
+
+                    <!-- Screen 5: Medicine 3.0 -->
+                    <div class="health-lab-carousel-slide" id="medicine3Screen">
+                        <div class="health-lab-content-wrapper">
+                            <div class="medicine3-container">
+                                <h1 class="medicine3-main-title">Track Your Health In <span class="text-bright-green">Real Time</span> Inside The Lab</h1>
+                                <h3 class="medicine3-subtitle" id="medicine3SubTitle">Discover Medicine 3.0</h3>
+                                <div class="biomarkers-grid" id="biomarkersGrid">
+                                    <!-- Biomarkers will be injected by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Screen 6: VO2 Max Plan -->
+                    <div class="health-lab-carousel-slide" id="vo2PlanScreen">
+                        <div class="health-lab-content-wrapper">
+                            <div class="plan-container">
+                                <div id="plan-form">
+                                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight text-center mb-2">Build Your VO2 Max In <span class="text-bright-green">Real Time</span> Inside The Lab</h2>
+                                    <h3 class="plan-subtitle">Generate a personal plan to increase your VO2 Max (Oxygen Efficiency)</h3>
+                                    <div class="form-group" id="form-group-1"><label class="form-label" for="name">Name</label><input type="text" id="name" class="form-input" value=""></div>
+                                    <div class="form-group" id="form-group-2"><label class="form-label" for="age">Age</label><input type="number" id="age" class="form-input" value=""></div>
+                                    <div class="form-group" id="form-group-3"><label class="form-label">Gender</label><div class="btn-group"><button class="btn-radio">Male</button><button class="btn-radio">Female</button></div></div>
+                                    <div class="form-group" id="form-group-4"><label class="form-label">Experience Level</label><div class="btn-group"><button class="btn-radio">Beginner</button><button class="btn-radio" id="intermediateBtn">Intermediate</button><button class="btn-radio">Advanced</button></div></div>
+                                    <div class="form-group" id="form-group-5"><button class="plan-btn" id="generatePlanBtn">Generate Physical Activity Plan</button></div>
+                                </div>
+                                <div id="plan-loading" class="hidden text-center">
+                                    <p id="loading-text" class="mb-4">Analyzing profile...</p>
+                                    <div class="loading-bar"><div class="loading-bar-inner"></div></div>
+                                </div>
+                                <div id="plan-reveal" class="hidden w-full">
+                                    <h2 class="plan-title"><span>Shane's</span> Week One Plan</h2>
+                                    <div class="space-y-2"><!-- Plan items will be added here --></div>
+                                </div>
+                            </div>
+                            <div id="cursor"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="health-lab-nav-container" style="left: 20px;">
+                    <button id="health-lab-prevBtn" class="health-lab-nav-button">&#10094;</button>
+                    <p class="health-lab-nav-text">Click arrow to see more of the Health Lab</p>
+                </div>
+                <div class="health-lab-nav-container" style="right: 20px;">
+                    <button id="health-lab-nextBtn" class="health-lab-nav-button">&#10095;</button>
+                    <p class="health-lab-nav-text">Click arrow to see more of the Health Lab</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing / Offer Section -->
+    <section id="pricing" class="dark-bg py-16 lg:py-24">
+        <div class="container mx-auto px-6 max-w-4xl text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">The Waitlist Founder's Offer</h2>
+            <p class="text-lg text-gray-300 mb-10">When we launch, the Longevity Builder Health Lab Software & The Book, it will be a $19.90/month for the top tier subscription. By joining the waitlist, you can get to lock in lifetime access for a single, one-time payment. In addition those on the waitlist will get access to our $299.00 Longevity Builder course for FREE.</p>
+            <div class="max-w-md mx-auto bg-[#1d1d1f] border border-brand-purple rounded-2xl p-8 shadow-2xl">
+                 <h3 class="text-2xl font-bold text-white mb-2">LIFETIME ACCESS</h3>
+                 <p class="text-lg text-gray-400 mb-4">(Founder's Waitlist Offer)</p>
+                 <p class="text-6xl font-black text-white mb-4">$240<span class="text-lg font-medium text-gray-400">/one-time</span></p>
+                 <p class="text-gray-300 line-through mb-6">Standard Price: $19.90/month</p>
+                 <ul class="text-left space-y-3 text-gray-300 mb-8">
+                     <li class="flex items-center"><svg class="w-5 h-5 accent-green mr-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Health Lab Software & Printed Book</li>
+                     <li class="flex items-center"><svg class="w-5 h-5 accent-green mr-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Priority Access Before Public Launch</li>
+                     <li class="flex items-center"><svg class="w-5 h-5 accent-green mr-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>FREE access to Longevity Course</li>
+                 </ul>
+                 <div class="btn-primary w-full inline-block text-lg font-bold py-4 px-10 rounded-full open-waitlist-modal">Secure Your Founder's Offer</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW Subscription Tiers Section -->
+    <section id="tiers" class="dark-bg pb-16 lg:pb-24">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">When we launch <span class="accent-green">Longevity Builder</span> Choose Your Access Level</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <!-- Tier 1 Card -->
+                <div class="tier-card">
+                    <h3 class="text-2xl font-bold text-brand-purple mb-2">Tier 1 - FREE Access</h3>
+                    <ul class="text-gray-300 space-y-3 mt-4 flex-grow">
+                        <li>Includes Public Podcast</li>
+                        <li>YouTube Channel</li>
+                        <li>3x Premium Podcast Episodes</li>
+                        <li>1 x Web Class</li>
+                    </ul>
+                </div>
+                <!-- Tier 2 Card -->
+                <div class="tier-card">
+                    <h3 class="text-2xl font-bold text-brand-purple mb-2">Tier 2</h3>
+                    <p class="text-3xl font-black accent-green mb-4">$3.00 <span class="text-lg font-medium text-gray-400">/month</span></p>
+                    <ul class="text-gray-300 space-y-3 mt-4 flex-grow">
+                        <li>12 Premium Podcast Episodes</li>
+                        <li>Summary version of Longevity book</li>
+                        <li>6 x Longevity Classroom Lessons</li>
+                        <li>Longevity Tracking Software App (Freemium version)</li>
+                        <li>Longevity Builder Course</li>
+                        <li>Everything in Tier 1</li>
+                    </ul>
+                </div>
+                <!-- Tier 3 Card -->
+                <div class="tier-card">
+                    <h3 class="text-2xl font-bold text-brand-purple mb-2">Tier 3</h3>
+                     <p class="text-3xl font-black accent-green mb-4">$19.90 <span class="text-lg font-medium text-gray-400">/month</span></p>
+                    <ul class="text-gray-300 space-y-3 mt-4 flex-grow">
+                        <li>Full access Longevity Builder Tracking Software</li>
+                        <li>24 Premium Podcast Episodes</li>
+                        <li>Full access Longevity Builder Classroom</li>
+                        <li>Full access to 4 Personal Longevity Reports</li>
+                        <li>Longevity Builder Personalised Weekly Activity Plan</li>
+                        <li>4 Live Event Workshops per year</li>
+                        <li>Full Access Longevity Builder Question Agent</li>
+                        <li>All of Tier 2</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-16">
+                <button class="btn-primary font-bold py-3 px-8 rounded-lg open-waitlist-modal">Join the waitlist. Click here.</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Abdominal Obesity Section -->
+    <section id="obesity-infographic" class="dark-bg py-16 lg:py-24">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Tried Everything to Lose Weight? You're Asking the Wrong Question.</h2>
+                <p class="max-w-3xl mx-auto text-gray-300 text-lg">It's not about the next diet. It's about your body's "Oxygen Efficiency." Unlock the secret to a high-performance metabolism and learn why building a better engine is the true key to sustainable weight management. Longevity Builder has a brand new (simple) approach to weight loss.</p>
+            </div>
+            <div class="frosted-glass-container">
+                <div class="text-center mb-10">
+                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight" style="color: var(--text-light);">The Dangers of Abdominal Obesity</h1>
+                    <p class="mt-3 text-base max-w-2xl mx-auto" style="color: var(--neon-green);">Click an icon to learn more.</p>
+                </div>
+                <div class="infographic-container">
+                    <svg class="absolute top-0 left-0 w-full h-full" id="lines-svg">
+                        <defs id="line-gradients"></defs>
+                    </svg>
+                    <div class="central-hub">
+                         <div class="main-icon">
+                            <img src="https://i.imgur.com/AND4kCn.png" alt="Anatomical illustration of abdominal fat around organs" onerror="this.onerror=null;this.src='https://placehold.co/220x330/1a1a1a/f0f0f0?text=Image+Not+Found';">
+                        </div>
+                    </div>
+                    <div id="nodes-container"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section-bg py-16 lg:py-24">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-3xl font-bold text-center mb-10">Frequently Asked Questions</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="font-bold text-lg mb-2 text-white">What exactly is Oxygen Efficiency (VO2 Max)?</h3>
+                    <p class="text-gray-400">VO2 Max is the single most powerful predictor of your longevity. It measures how efficiently your body can take in oxygen and deliver it to your muscles to produce energy. A higher score means a more resilient cardiovascular system and a dramatically lower risk of chronic disease.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2 text-white">What are AQ Points?</h3>
+                    <p class="text-gray-400">Developed by leading researchers, Activity Quotient (AQ) is a clinically validated point system that measures the health benefits of your physical activity. It focuses only on your heart rate, making it the most accurate way to track if your efforts are truly improving your health.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2 text-white">What if I'm a complete beginner?</h3>
+                    <p class="text-gray-400">The Longevity Builder program is designed for everyone, regardless of their starting point. The Health Lab software will guide you through an incremental process, classifying you as a Beginner, Consistent, or Dedicated user to create a plan that is right for you, ensuring you build sustainable habits safely.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2 text-white">Is the $240 founder's price really a one-time payment?</h3>
+                    <p class="text-gray-400">Yes. The Founder's Offer is a special opportunity for our early supporters who join the waitlist. You will get lifetime access to the Longevity Builder Health Lab, the printed book, and all future updates for a single payment of $240. This offer will not be available to the public after we launch.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-lg mb-2 text-white">What kind of results can I expect?</h3>
+                    <p class="text-gray-400">By using the software to incrementally raise your Oxygen Efficiency Score, you can achieve stunning, clinically validated reductions in risk. These include up to a 61% less risk of premature death, a 41% reduction in heart attack risk, a 50% reduction in dementia risk, and a 17x lower risk of fatty liver disease.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="waitlist" class="dark-bg py-16 lg:py-24">
+        <div class="container mx-auto px-6">
+            <div id="waitlist-form-container" class="bg-[#1d1d1f] max-w-2xl mx-auto rounded-2xl p-8 md:p-12 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-2">It's Time to Act.</h2>
+                <p class="text-gray-300 mb-8">You now possess the knowledge. The choice you face today is to consciously step away from a preventable tragedy and onto the path of the Longevity Builder. Your journey begins with a single step.</p>
+                 <form class="waitlist-form" action="https://formspree.io/f/xkgbbgoo" method="POST">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="email" name="email" placeholder="Your email address" required class="flex-grow bg-black text-white px-4 py-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 w-full">
+                        <button type="submit" class="btn-primary font-bold py-3 px-8 rounded-lg w-full sm:w-auto">Join the Waitlist Now</button>
+                    </div>
+                </form>
+                <p class="mt-6 text-sm text-gray-400 dynamic-counter">Join 3,737+ others. Click the button.</p>
+            </div>
+             <div id="waitlist-thank-you-static" class="hidden bg-[#1d1d1f] max-w-2xl mx-auto rounded-2xl p-8 md:p-12 text-center text-white">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Thank You! You're In.</h2>
+                <p class="text-lg text-gray-300">Welcome to the Longevity Builder community. You're on the Founder's list and have secured your opportunity for the lifetime offer. Keep an eye on your inbox for exclusive updates.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Modal -->
+    <div id="info-modal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div class="info-modal-content w-full max-w-lg p-8 rounded-2xl text-white transform scale-95 transition-transform duration-300 relative">
+            <button id="close-info-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition text-3xl leading-none">&times;</button>
+            <h3 id="info-modal-title" class="text-2xl font-bold mb-4"></h3>
+            <p id="info-modal-body" class="text-gray-300"></p>
+        </div>
+    </div>
+
+    <!-- Waitlist Modal -->
+    <div id="waitlist-modal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div class="waitlist-modal-content w-full rounded-2xl text-white transform scale-95 transition-transform duration-300 relative">
+            <button id="close-waitlist-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition text-3xl leading-none">&times;</button>
+            <div id="waitlist-form-container-modal" class="p-8 md:p-12 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-2">It's Time to Act.</h2>
+                <p class="text-gray-300 mb-8">You now possess the knowledge. The choice you face today is to consciously step away from a preventable tragedy and onto the path of the Longevity Builder. Your journey begins with a single step.</p>
+                 <form class="waitlist-form" action="https://formspree.io/f/xkgbbgoo" method="POST">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="email" name="email" placeholder="Your email address" required class="flex-grow bg-black text-white px-4 py-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 w-full">
+                        <button type="submit" class="btn-primary font-bold py-3 px-8 rounded-lg w-full sm:w-auto">Join the Waitlist Now</button>
+                    </div>
+                </form>
+                <p class="mt-6 text-sm text-gray-400 dynamic-counter">Join 3,737+ others. Click the button.</p>
+            </div>
+             <div id="waitlist-thank-you-static-modal" class="hidden p-8 md:p-12 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Thank You! You're In.</h2>
+                <p class="text-lg text-gray-300">Welcome to the Longevity Builder community. You're on the Founder's list and have secured your opportunity for the lifetime offer. Keep an eye on your inbox for exclusive updates.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Obesity Info Modal -->
+    <div id="obesity-info-modal" class="obesity-modal-overlay">
+        <div class="obesity-modal-content">
+            <div id="obesity-modal-close-btn" class="obesity-modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </div>
+            <div class="flex items-center mb-4">
+                 <div id="obesity-modal-icon" class="mr-4"></div>
+                 <h3 id="obesity-modal-title" class="text-2xl font-bold" style="color: var(--neon-green);"></h3>
+            </div>
+            <p id="obesity-modal-text" class="text-gray-300"></p>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="dark-bg py-12">
+        <div class="container mx-auto px-6 text-center text-sm text-gray-600">
+            <p>Copyright © 2025-2026 Shane Stubbs. All Rights Reserved.</p>
+        </div>
+    </footer>
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Chart.register(ChartDataLabels);
+
+            // --- Dynamic Waitlist Counter ---
+            const counterElements = document.querySelectorAll('.dynamic-counter');
+            if (counterElements.length > 0) {
+                let count = 3737;
+                const formatNumber = (num) => new Intl.NumberFormat('en-US').format(num);
+                
+                const animateCounter = () => {
+                    const increment = Math.floor(Math.random() * 2) + 2; // 2 or 3
+                    count += increment;
+                    counterElements.forEach(el => {
+                        el.textContent = `Join ${formatNumber(count)}+ others. Click the button.`;
+                    });
+                    
+                    const randomDelay = Math.floor(Math.random() * 2000) + 3000; // 3-5 seconds
+                    setTimeout(animateCounter, randomDelay);
+                };
+                setTimeout(animateCounter, 3000);
+            }
+           
+            // --- Hazard Ratio Chart ---
+            const hazardCtx = document.getElementById('hazardRatioChart');
+            if (hazardCtx) {
+                const hazardData = [
+                    { label: 'VO2 Max (Oxygen Efficiency)', value: 5.0, color: '#ae15ce', description: "This is the single most powerful predictor of longevity. A low VO2 Max, or poor oxygen efficiency, indicates a weak cardiovascular engine, increasing all-cause mortality risk by 400%. Improving it builds a resilient heart, flexible arteries, and efficient cellular energy production, creating a body-wide defense against chronic disease." },
+                    { label: 'Strength', value: 2.3, color: '#ae15ce', description: "Muscular strength is a critical pillar of healthspan. Low strength is linked to poor metabolic health, increased risk of falls and fractures, and a faster decline into frailty. Building and maintaining muscle mass is essential for preserving mobility, metabolic function, and independence as we age." },
+                    { label: 'Smoking', value: 2.0, color: '#00FF00', description: "Smoking is a systemic poison. It directly damages the delicate inner lining of your arteries (the endothelium), dramatically accelerates the process of atherosclerosis (plaque buildup), and floods the body with oxidative stress, increasing the risk of virtually every chronic disease, especially heart attack, stroke, and cancer." },
+                    { label: 'Morbid Obesity', value: 2.0, color: '#00FF00', description: "A BMI over 40 signifies a state of severe metabolic distress. At this level, adipose tissue acts as a rogue organ, pumping out inflammatory molecules that drive insulin resistance and systemic inflammation. This creates a highly favorable environment for heart disease, diabetes, and certain cancers to develop." },
+                    { label: 'Type 2 Diabetes', value: 1.5, color: '#00FF00', description: "This is a state of energy crisis where the body can no longer properly manage blood sugar. The resulting high glucose levels (glucotoxicity) act like a corrosive agent, damaging nerves, kidneys, eyes, and blood vessels, which dramatically accelerates cardiovascular disease." },
+                    { label: 'Severe Obesity', value: 1.4, color: '#00FF00', description: "A BMI between 35 and 40 is linked to a 40% increased risk of all-cause mortality. It represents a significant metabolic burden, increasing strain on the cardiovascular system and promoting a state of chronic inflammation that accelerates the aging process and the development of other diseases." },
+                    { label: 'High Blood Pressure', value: 1.3, color: '#00FF00', description: "Often called the 'silent killer,' hypertension relentlessly damages your entire vascular system. Each heartbeat becomes a mechanical blow against your artery walls, leading to stiffness, plaque formation, and an increased risk of a catastrophic aneurysm or stroke." },
+                    { label: 'Elevated Insulin', value: 1.3, color: '#00FF00', description: "Often a precursor to diabetes, high fasting insulin (hyperinsulinemia) is a clear sign of insulin resistance. It means your body's cells are struggling to hear insulin's signal, forcing the pancreas to work overtime. This state promotes fat storage, increases inflammation, and is a key driver of metabolic syndrome." },
+                    { label: 'Excessive Alcohol', value: 1.2, color: '#00FF00', description: "While moderate consumption may have some neutral or minor effects, heavy alcohol use is toxic to the body. It contributes to liver disease, heart muscle damage, increased blood pressure, and a higher risk for certain cancers, increasing mortality risk by 20%." },
+                    { label: 'Sedentary Lifestyle', value: 1.2, color: '#00FF00', description: "Lack of physical activity is an independent risk factor for disease. A sedentary body has a weaker cardiovascular engine, poorer insulin sensitivity, and less muscle mass. This increases the risk of the 'Big Four' chronic diseases and represents a 20% increased mortality risk, separate from the benefits of structured exercise." },
+                    { label: 'Poor Dietary Pattern', value: 1.1, color: '#00FF00', description: "While critically important, diet's direct impact on mortality is less than other factors. A diet high in processed foods and sugar fuels inflammation and metabolic dysfunction. A Longevity Builder focuses on a simple, whole-foods approach to support the more powerful adaptations driven by improving oxygen efficiency." },
+                ];
+
+                const createHazardChart = () => {
+                    new Chart(hazardCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: hazardData.map(d => d.label),
+                            datasets: [{
+                                label: 'Hazard Ratio',
+                                data: hazardData.map(d => d.value),
+                                backgroundColor: hazardData.map(d => d.color),
+                                borderWidth: 0,
+                                borderRadius: 8
+                            }]
+                        },
+                        options: {
+                            indexAxis: 'y',
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            animation: {
+                                duration: 2000,
+                                easing: 'easeOutCubic'
+                            },
+                            onClick: (evt, elements) => {
+                                if (elements.length > 0) {
+                                    const i = elements[0].index;
+                                    openInfoModal(hazardData[i].label, hazardData[i].description, hazardData[i].value);
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    enabled: false
+                                },
+                                datalabels: {
+                                    color: '#fff',
+                                    font: {
+                                        weight: 'bold',
+                                        size: 12,
+                                        family: 'Inter'
+                                    },
+                                    formatter: (v) => `HR: ${v.toFixed(1)} (+${((v - 1) * 100).toFixed(0)}%)`,
+                                    anchor: 'end',
+                                    align: 'right',
+                                    offset: 8,
+                                    padding: {
+                                        right: -8
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    display: false,
+                                    max: 5.5
+                                },
+                                y: {
+                                    grid: {
+                                        display: false
+                                    },
+                                    ticks: {
+                                        color: '#e5e7eb',
+                                        font: {
+                                            size: 14,
+                                            family: 'Inter',
+                                            weight: '500'
+                                        }
+                                    }
+                                }
+                            },
+                            layout: {
+                                padding: {
+                                    left: 20,
+                                    right: 10
+                                }
+                            }
+                        },
+                    });
+                };
+
+                const hazardChartObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            createHazardChart();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.5
+                });
+
+                hazardChartObserver.observe(hazardCtx);
+            }
+            
+            // --- Transformation Animation (Main Page) ---
+            function initTransformationAnimation() {
+                const animationSection = document.querySelector('.animation-section-bg');
+                if(!animationSection) return;
+                
+                const maleFigureImage = document.getElementById('male-figure-image');
+                const femaleFigureImage = document.getElementById('female-figure-image');
+                const timelineProgressTop = document.getElementById('timeline-progress');
+                const timelineMarkersTop = [ document.getElementById('marker-0'), document.getElementById('marker-1'), document.getElementById('marker-2'), document.getElementById('marker-3') ];
+                const timelineProgressBottom = document.getElementById('timeline-progress-bottom');
+                const timelineMarkersBottom = [ document.getElementById('marker-0-bottom'), document.getElementById('marker-1-bottom'), document.getElementById('marker-2-bottom'), document.getElementById('marker-3-bottom') ];
+                const valueElements = { leTop: document.getElementById('le-b'), leBottom: document.getElementById('le-b-bottom') };
+                
+                const phases = [
+                    { le: "Baseline", clipPath: 'inset(0 50% 0 0)', color: "text-red-400", progress: "0%" },
+                    { le: "+3 Years", clipPath: 'inset(0 25% 0 0)', color: "text-yellow-400", progress: "33%" },
+                    { le: "+6 Years", clipPath: 'inset(0 10% 0 0)', color: "text-green-300", progress: "66%" },
+                    { le: "+10 Years", clipPath: 'inset(0 0% 0 0)', color: "neon-green-text", progress: "100%" }
+                ];
+                let currentPhaseIndex = 0, animationCycle = 0, activeImage = maleFigureImage;
+               
+                function updateDisplay(phaseIndex, figureImage) {
+                    const phase = phases[phaseIndex];
+                    if (figureImage) figureImage.style.clipPath = phase.clipPath;
+                    
+                    if(valueElements.leTop) valueElements.leTop.textContent = phase.le;
+                    if(valueElements.leBottom) valueElements.leBottom.textContent = phase.le;
+                   
+                    if(valueElements.leTop) valueElements.leTop.className = `data-value life-expectancy-highlight text-2xl font-black ${phase.color}`;
+                    if(valueElements.leBottom) valueElements.leBottom.className = `data-value life-expectancy-highlight text-2xl font-black ${phase.color}`;
+
+                    if(timelineProgressTop) timelineProgressTop.style.width = phase.progress;
+                    if(timelineProgressBottom) timelineProgressBottom.style.width = phase.progress;
+                    timelineMarkersTop.forEach((m, i) => { if(m) m.classList.toggle('active', i <= phaseIndex); });
+                    timelineMarkersBottom.forEach((m, i) => { if(m) m.classList.toggle('active', i <= phaseIndex); });
+                }
+               
+                function startAnimationLoop() {
+                    setInterval(() => {
+                        currentPhaseIndex = (currentPhaseIndex + 1) % phases.length;
+                        if (currentPhaseIndex === 0) {
+                            animationCycle++;
+                            activeImage = (animationCycle % 2 === 0) ? maleFigureImage : femaleFigureImage;
+                            maleFigureImage.classList.toggle('hidden', animationCycle % 2 !== 0);
+                            femaleFigureImage.classList.toggle('hidden', animationCycle % 2 === 0);
+                        }
+                        updateDisplay(currentPhaseIndex, activeImage);
+                    }, 3500);
+                }
+
+                if (maleFigureImage && femaleFigureImage) { updateDisplay(0, activeImage); startAnimationLoop(); }
+            }
+            initTransformationAnimation();
+
+            // --- Transformative Outcomes Animation ---
+            const outcomesGrid = document.getElementById('outcomes-grid');
+            if (outcomesGrid) {
+                const outcomeCards = outcomesGrid.querySelectorAll('.outcome-card');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            outcomeCards.forEach((card, index) => {
+                                setTimeout(() => {
+                                    card.classList.add('is-visible');
+                                }, index * 150);
+                            });
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                observer.observe(outcomesGrid);
+            }
+
+            // --- Health Lab Carousel Logic ---
+            const healthLabCarousel = document.getElementById('health-lab-carousel');
+            if (healthLabCarousel) {
+                const prevBtn = document.getElementById('health-lab-prevBtn');
+                const nextBtn = document.getElementById('health-lab-nextBtn');
+                const slides = healthLabCarousel.querySelectorAll('.health-lab-carousel-slide');
+                let currentIndex = 0;
+
+                const goToSlide = (index) => {
+                    healthLabCarousel.scrollLeft = index * healthLabCarousel.clientWidth;
+                    currentIndex = index;
+                };
+
+                nextBtn.addEventListener('click', () => goToSlide((currentIndex + 1) % slides.length));
+                prevBtn.addEventListener('click', () => goToSlide((currentIndex - 1 + slides.length) % slides.length));
+                
+                 const typeWriter = (element, text, delay = 100) => new Promise(resolve => {
+                    let i = 0;
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.value = "";
+                        function type() {
+                            if (i < text.length) {
+                                element.value += text.charAt(i++);
+                                setTimeout(type, delay);
+                            } else {
+                                resolve();
+                            }
+                        }
+                        type();
+                    } else {
+                        element.innerHTML = "";
+                        function type() {
+                            if (i < text.length) {
+                                element.innerHTML += text.charAt(i++);
+                                setTimeout(type, delay);
+                            } else {
+                                resolve();
+                            }
+                        }
+                        type();
+                    }
+                });
+
+                // --- Track Longevity Chart (Slide 2) ---
+                const trackLongevityScreen = document.getElementById('trackLongevityScreen');
+                if (trackLongevityScreen) {
+                    const svg = document.getElementById('health-tracker-svg');
+                    const ns = "http://www.w3.org/2000/svg";
+                    const data = {
+                        labels: ['0 days', '90 days', '180 days', '270 days', '365 days'],
+                        aq: { label: 'Activity Quotient Tracking', values: [0, 25, 50, 75, 100], unit: 'points', gradient: 'url(#aqGradient)' },
+                        vo2: { label: 'VO2 Max (Oxygen Efficiency)', values: [0, 28, 34, 39, 44], unit: 'ml/kg/min', gradient: 'url(#vo2Gradient)' }
+                    };
+                    const svgWidth = 600;
+                    const svgHeight = 330;
+                    const padding = 50;
+
+                    function scale(value, domain, range) {
+                        return range[0] + (value - domain[0]) * (range[1] - range[0]) / (domain[1] - domain[0]);
+                    }
+
+                    function createGraph(dataset, yDomain, yRange, labelOffset) {
+                        const path = document.createElementNS(ns, 'path');
+                        const points = dataset.values.map((val, i) => ({
+                            x: scale(i, [0, data.labels.length - 1], [padding, svgWidth + padding]),
+                            y: scale(val, yDomain, yRange)
+                        }));
+
+                        let pathData = `M ${points[0].x} ${points[0].y}`;
+                        for (let i = 0; i < points.length - 1; i++) {
+                            const x_mid = (points[i].x + points[i+1].x) / 2;
+                            const y_mid = (points[i].y + points[i+1].y) / 2;
+                            const cp_x1 = (x_mid + points[i].x) / 2;
+                            const cp_x2 = (x_mid + points[i+1].x) / 2;
+                            pathData += ` Q ${cp_x1}, ${points[i].y}, ${x_mid}, ${y_mid}`;
+                            pathData += ` Q ${cp_x2}, ${points[i+1].y}, ${points[i+1].x}, ${points[i+1].y}`;
+                        }
+                        
+                        path.setAttribute('d', pathData);
+                        path.setAttribute('stroke', dataset.gradient);
+                        path.setAttribute('stroke-width', '5');
+                        path.setAttribute('fill', 'none');
+                        path.setAttribute('filter', 'url(#glow)');
+                        path.setAttribute('stroke-linecap', 'round');
+                        path.classList.add('graph-line');
+                        svg.appendChild(path);
+
+                        points.forEach((p, i) => {
+                            if (i === 0) return;
+                            const dottedLine = document.createElementNS(ns, 'line');
+                            dottedLine.setAttribute('x1', p.x); dottedLine.setAttribute('y1', p.y);
+                            dottedLine.setAttribute('x2', p.x); dottedLine.setAttribute('y2', svgHeight + padding);
+                            dottedLine.setAttribute('stroke', 'rgba(255,255,255,0.2)');
+                            dottedLine.setAttribute('stroke-width', '1');
+                            dottedLine.setAttribute('stroke-dasharray', '3 6');
+                            const markerGroup = document.createElementNS(ns, 'g');
+                            markerGroup.classList.add('marker-group');
+                            markerGroup.style.animationDelay = `${i * 0.8}s`;
+                            markerGroup.appendChild(dottedLine);
+                            const outerCircle = document.createElementNS(ns, 'circle');
+                            outerCircle.setAttribute('cx', p.x); outerCircle.setAttribute('cy', p.y);
+                            outerCircle.setAttribute('r', '8'); outerCircle.setAttribute('fill', '#0D1117');
+                            outerCircle.setAttribute('stroke', 'rgba(255,255,255,0.5)');
+                            outerCircle.setAttribute('stroke-width', '2');
+                            markerGroup.appendChild(outerCircle);
+                            const innerCircle = document.createElementNS(ns, 'circle');
+                            innerCircle.setAttribute('cx', p.x); innerCircle.setAttribute('cy', p.y);
+                            innerCircle.setAttribute('r', '4'); innerCircle.setAttribute('fill', '#fff');
+                            innerCircle.setAttribute('style', `filter: drop-shadow(0 0 5px #fff);`);
+                            markerGroup.appendChild(innerCircle);
+                            svg.appendChild(markerGroup);
+                            const label = document.createElementNS(ns, 'text');
+                            label.textContent = `${dataset.values[i]} ${dataset.unit}`;
+                            label.setAttribute('x', p.x); label.setAttribute('y', p.y + labelOffset);
+                            label.setAttribute('fill', '#fff'); label.setAttribute('font-family', "'Roboto Mono', monospace");
+                            label.setAttribute('font-size', '14'); label.setAttribute('font-weight', '300');
+                            label.setAttribute('text-anchor', 'middle');
+                            const labelGroup = document.createElementNS(ns, 'g');
+                            labelGroup.classList.add('label-group');
+                            labelGroup.style.animationDelay = `${i * 0.8}s`;
+                            labelGroup.appendChild(label);
+                            svg.appendChild(labelGroup);
+                        });
+                    }
+
+                    function runAnimation() {
+                        if(!svg) return;
+                        svg.querySelectorAll('.graph-line, .marker-group, .label-group').forEach(el => el.remove());
+                        const vo2YRange = [svgHeight / 2 - 20, padding]; 
+                        const aqYRange = [svgHeight + 20, svgHeight / 2 + 30]; 
+                        createGraph(data.vo2, [0, 50], vo2YRange, -20);
+                        createGraph(data.aq, [0, 110], aqYRange, 30); 
+                        setTimeout(() => {
+                            svg.querySelectorAll('.graph-line, .marker-group, .label-group').forEach(el => el.classList.add('animate'));
+                        }, 100);
+                    }
+
+                    let trackLongevityInterval;
+                    const trackLongevityObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                if (!trackLongevityInterval) {
+                                    runAnimation();
+                                    trackLongevityInterval = setInterval(runAnimation, 8000);
+                                }
+                            } else {
+                                if (trackLongevityInterval) {
+                                    clearInterval(trackLongevityInterval);
+                                    trackLongevityInterval = null;
+                                }
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    
+                    trackLongevityObserver.observe(trackLongevityScreen);
+                }
+
+                // --- Blood Panel Animation (Carousel - Slide 3) ---
+                const bloodPanelScreen = document.getElementById('bloodPanelScreen');
+                if (bloodPanelScreen) {
+                    const valueElements = { 
+                        vo2: document.getElementById('vo2-b-carousel'), 
+                        bp: document.getElementById('bp-b-carousel'), 
+                        ldlValue: document.getElementById('ldl-b-value-carousel'), 
+                        hdlValue: document.getElementById('hdl-b-value-carousel'), 
+                        trigValue: document.getElementById('trig-b-value-carousel'), 
+                        insulinValue: document.getElementById('insulin-b-value-carousel') 
+                    };
+                    const markerElements = { 
+                        ldl: document.getElementById('ldl-marker-carousel'), 
+                        hdl: document.getElementById('hdl-marker-carousel'), 
+                        trig: document.getElementById('trig-marker-carousel'), 
+                        insulin: document.getElementById('insulin-marker-carousel') 
+                    };
+                    const clinicalRanges = { ldl: { min: 40, max: 200 }, hdl: { min: 20, max: 100 }, trig: { min: 40, max: 250 }, insulin: { min: 2, max: 25 } };
+                    const phases = [
+                        { vo2: 28.0, bp_sys: 145, bp_dia: 90, ldl: 160, hdl: 35, trig: 200, insulin: 15.0, ldl_au: 4.1, hdl_au: 0.9, trig_au: 2.3, insulin_au: 104.2, color: "text-red-400" },
+                        { vo2: 35.5, bp_sys: 135, bp_dia: 85, ldl: 130, hdl: 45, trig: 150, insulin: 10.0, ldl_au: 3.4, hdl_au: 1.2, trig_au: 1.7, insulin_au: 69.5, color: "text-yellow-400" },
+                        { vo2: 42.0, bp_sys: 125, bp_dia: 80, ldl: 100, hdl: 55, trig: 100, insulin: 6.0, ldl_au: 2.6, hdl_au: 1.4, trig_au: 1.1, insulin_au: 41.7, color: "text-green-300" },
+                        { vo2: 51.0, bp_sys: 115, bp_dia: 75, ldl: 70, hdl: 75, trig: 65, insulin: 3.0, ldl_au: 1.8, hdl_au: 1.9, trig_au: 0.7, insulin_au: 20.8, color: "neon-green-text" }
+                    ];
+                    let currentPhaseIndex = 0;
+
+                    function positionMarker(value, range, markerElement, reverse = false) {
+                        if(!markerElement) return;
+                        let percent = Math.max(0, Math.min(100, ((value - range.min) / (range.max - range.min)) * 100));
+                        markerElement.style.left = reverse ? `${100 - percent}%` : `${percent}%`;
+                    }
+                
+                    function updateBloodPanel(phaseIndex) {
+                        const phase = phases[phaseIndex];
+                        document.querySelectorAll('#bloodPanelScreen .data-value').forEach(el => {
+                            el.classList.remove('text-red-400', 'text-yellow-400', 'text-green-300', 'neon-green-text');
+                            el.classList.add(phase.color);
+                        });
+                        if (valueElements.vo2) valueElements.vo2.textContent = phase.vo2.toFixed(1);
+                        if (valueElements.bp) valueElements.bp.textContent = `${phase.bp_sys}/${phase.bp_dia}`;
+                        if (valueElements.ldlValue) valueElements.ldlValue.innerHTML = `${phase.ldl} <span class="text-xs font-normal">mg/dL</span><br><span class="text-xs font-normal">(${phase.ldl_au.toFixed(1)} mmol/L)</span>`;
+                        positionMarker(phase.ldl, clinicalRanges.ldl, markerElements.ldl);
+                        if (valueElements.hdlValue) valueElements.hdlValue.innerHTML = `${phase.hdl} <span class="text-xs font-normal">mg/dL</span><br><span class="text-xs font-normal">(${phase.hdl_au.toFixed(1)} mmol/L)</span>`;
+                        positionMarker(phase.hdl, clinicalRanges.hdl, markerElements.hdl, true);
+                        if (valueElements.trigValue) valueElements.trigValue.innerHTML = `${phase.trig} <span class="text-xs font-normal">mg/dL</span><br><span class="text-xs font-normal">(${phase.trig_au.toFixed(1)} mmol/L)</span>`;
+                        positionMarker(phase.trig, clinicalRanges.trig, markerElements.trig);
+                        if (valueElements.insulinValue) valueElements.insulinValue.innerHTML = `${phase.insulin.toFixed(1)} <span class="text-xs font-normal">µU/mL</span><br><span class="text-xs font-normal">(${phase.insulin_au.toFixed(1)} pmol/L)</span>`;
+                        positionMarker(phase.insulin, clinicalRanges.insulin, markerElements.insulin);
+                    }
+                    
+                    const bloodPanelObserver = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                setInterval(() => {
+                                    currentPhaseIndex = (currentPhaseIndex + 1) % phases.length;
+                                    updateBloodPanel(currentPhaseIndex);
+                                }, 3500);
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    bloodPanelObserver.observe(bloodPanelScreen);
+                    updateBloodPanel(0);
+                }
+
+                // --- Longevity Report Generator (Slide 4) ---
+                const reportScreen = document.getElementById('longevityReportScreen');
+                if (reportScreen) {
+                    const reportFormContainer = document.getElementById('report-form-container');
+                    const generatingPopup = document.getElementById('generating-popup');
+                    const finalScreen = document.getElementById('report-final-screen');
+                    const cursor = document.getElementById('report-cursor');
+
+                    const fields = [
+                        { id: 'report-name', text: 'Shane. S' },
+                        { id: 'report-age', text: '59 years old' },
+                        { id: 'report-total-chol', text: '3.4 mmol/L (131 mg/dL)' },
+                        { id: 'report-ldl', text: '1.7 mmol/L (66 mg/dL)' },
+                        { id: 'report-trig', text: '0.7 mmol/L (62 mg/dL)' },
+                        { id: 'report-hdl', text: '1.9 mmol/L (73 mg/dL)' },
+                        { id: 'report-insulin', text: '11 µU/mL' },
+                        { id: 'report-bp', text: '115/68' },
+                        { id: 'report-vo2', text: '50 ml/kg/min' }
+                    ];
+
+                    const moveCursorTo = (el) => new Promise(r => { const rect = el.getBoundingClientRect(), carouselRect = healthLabCarousel.getBoundingClientRect(); cursor.style.top = `${rect.top - carouselRect.top + rect.height / 2}px`; cursor.style.left = `${rect.left - carouselRect.left + rect.width / 2}px`; setTimeout(r, 600); });
+
+                    async function runReportAnimation() {
+                        // Reset state
+                        reportFormContainer.style.opacity = 1;
+                        generatingPopup.style.opacity = 0;
+                        generatingPopup.style.pointerEvents = 'none';
+                        finalScreen.style.opacity = 0;
+                        finalScreen.style.pointerEvents = 'none';
+                        fields.forEach(f => document.getElementById(f.id).innerHTML = '');
+                        cursor.style.display = 'block';
+
+                        // Type out fields
+                        for (const field of fields) {
+                            const el = document.getElementById(field.id);
+                            await moveCursorTo(el);
+                            await typeWriter(el, field.text, 80);
+                        }
+                        
+                        cursor.style.display = 'none';
+                        
+                        // Show generating popup
+                        await new Promise(r => setTimeout(r, 500));
+                        generatingPopup.style.opacity = 1;
+                        generatingPopup.style.pointerEvents = 'auto';
+
+                        // Wait and then show final screen
+                        await new Promise(r => setTimeout(r, 2500));
+                        generatingPopup.style.opacity = 0;
+                        generatingPopup.style.pointerEvents = 'none';
+                        reportFormContainer.style.opacity = 0;
+                        
+                        await new Promise(r => setTimeout(r, 500));
+                        finalScreen.style.opacity = 1;
+                        finalScreen.style.pointerEvents = 'auto';
+                    }
+
+                     const reportObserver = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                               runReportAnimation();
+                               observer.unobserve(entry.target); // Run only once per intersection
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    reportObserver.observe(reportScreen);
+                }
+
+                // --- Medicine 3.0 Animation (Slide 5) ---
+                const medicine3Screen = document.getElementById('medicine3Screen');
+                if (medicine3Screen) {
+                    const subTitleEl = document.getElementById('medicine3SubTitle');
+                    const gridEl = document.getElementById('biomarkersGrid');
+                    const biomarkers = [
+                        { name: 'Heart Health', icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>' },
+                        { name: 'Cancer Detection', icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>' },
+                        { name: 'Metabolic Function', icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>' },
+                        { name: 'Genetic Health', icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>' },
+                        { name: 'Body Composition', icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>' },
+                        { name: 'Muscle Health', icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 6.75c0-1.24-1.01-2.25-2.25-2.25H17V3h-2v1.5H9V3H7v1.5H5.25C4.01 4.5 3 5.51 3 6.75V18c0 1.24 1.01 2.25 2.25 2.25h13.5c1.24 0 2.25-1.01 2.25-2.25V6.75zM19.5 18H17v-4.5H7V18H4.5V9h15v9z"/></svg>' }
+                    ];
+                    const runMedicine3Animation = async () => {
+                        subTitleEl.innerHTML = 'Discover Medicine 3.0'; // Static sub-header
+                        gridEl.innerHTML = '';
+                        
+                        biomarkers.forEach((item, index) => {
+                            const itemEl = document.createElement('div');
+                            itemEl.className = 'biomarker-item';
+                            itemEl.innerHTML = `${item.icon}<span>${item.name}</span>`;
+                            gridEl.appendChild(itemEl);
+                            setTimeout(() => itemEl.classList.add('visible'), index * 200);
+                        });
+                    };
+                    const medicineObserver = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                setTimeout(runMedicine3Animation, 500);
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    medicineObserver.observe(medicine3Screen);
+                }
+
+                // --- VO2 Max Plan Animation (Slide 6) ---
+                const vo2PlanScreen = document.getElementById('vo2PlanScreen');
+                if(vo2PlanScreen) {
+                    const planContainer = vo2PlanScreen.querySelector('.plan-container');
+                    const planForm = document.getElementById('plan-form');
+                    const nameInput = document.getElementById('name'), ageInput = document.getElementById('age'), intermediateBtn = document.getElementById('intermediateBtn'), generatePlanBtn = document.getElementById('generatePlanBtn'), planLoading = document.getElementById('plan-loading'), planReveal = document.getElementById('plan-reveal'), loadingText = document.getElementById('loading-text'), cursor = document.getElementById('cursor');
+                    const planTitle = planReveal.querySelector('.plan-title');
+                    const moveCursorTo = (el) => new Promise(r => { const rect = el.getBoundingClientRect(), carouselRect = healthLabCarousel.getBoundingClientRect(); cursor.style.top = `${rect.top - carouselRect.top + rect.height / 2}px`; cursor.style.left = `${rect.left - carouselRect.left + rect.width / 2}px`; setTimeout(r, 600); });
+                    const clickElement = (el) => new Promise(r => { el.classList.add('selected'); cursor.style.transform = 'scale(0.8)'; setTimeout(() => { cursor.style.transform = 'scale(1)'; r(); }, 200); });
+                    
+                    async function runPlanGenerationAnimation() {
+                        planForm.classList.remove('hidden'); 
+                        planLoading.classList.add('hidden'); 
+                        planReveal.classList.add('hidden'); 
+                        planReveal.querySelector('.space-y-2').innerHTML = ''; 
+                        nameInput.value = ''; 
+                        ageInput.value = ''; 
+                        document.querySelectorAll('#vo2PlanScreen .btn-radio').forEach(b => b.classList.remove('selected'));
+                        document.querySelectorAll('#plan-form .form-group').forEach(el => el.classList.remove('visible'));
+                        cursor.style.display = 'block';
+
+                        const formGroups = Array.from(document.querySelectorAll('#plan-form .form-group'));
+                        for (let i = 0; i < formGroups.length; i++) { 
+                            await new Promise(r => setTimeout(r, 300)); 
+                            formGroups[i].classList.add('visible'); 
+                        }
+                        await new Promise(r => setTimeout(r, 500)); await moveCursorTo(nameInput); await typeWriter(nameInput, 'Shane S.');
+                        await new Promise(r => setTimeout(r, 500)); await moveCursorTo(ageInput); await typeWriter(ageInput, '59');
+                        await new Promise(r => setTimeout(r, 500)); await moveCursorTo(document.querySelector('#vo2PlanScreen .btn-radio')); await clickElement(document.querySelector('#vo2PlanScreen .btn-radio'));
+                        await new Promise(r => setTimeout(r, 500)); await moveCursorTo(intermediateBtn); await clickElement(intermediateBtn);
+                        
+                        planContainer.scrollTop = planContainer.scrollHeight;
+                        await new Promise(r => setTimeout(r, 500)); 
+
+                        await moveCursorTo(generatePlanBtn); await clickElement(generatePlanBtn);
+                        await new Promise(r => setTimeout(r, 300)); 
+                        planForm.classList.add('hidden'); 
+                        planLoading.classList.remove('hidden'); 
+                        cursor.style.display = 'none';
+                        
+                        loadingText.textContent = 'Analyzing profile...';
+                        await new Promise(r => setTimeout(r, 1500));
+                        loadingText.textContent = 'Calculating optimal heart rate zones...';
+                        await new Promise(r => setTimeout(r, 1500));
+                        loadingText.textContent = 'Generating custom plan...';
+                        await new Promise(r => setTimeout(r, 1000));
+
+                        planLoading.classList.add('hidden'); 
+                        planReveal.classList.remove('hidden');
+                        planTitle.innerHTML = `<span>Shane's</span> Week One Plan`;
+                        const planItems = [ { day: 'Monday', activity: 'HIIT Class', hr: '85-90% (145-153 bpm)'}, { day: 'Tuesday', activity: 'Active Recovery Walk', hr: '60-70% (102-119 bpm)'}, { day: 'Wednesday', activity: 'Cycling Class', hr: '80-85% (136-145 bpm)'}, { day: 'Thursday', activity: 'Strength Training', hr: '70-80% (119-136 bpm)'}, { day: 'Friday', activity: 'Swimming Intervals', hr: '85-90% (145-153 bpm)'}, { day: 'Saturday', activity: 'Group Fitness Class', hr: '75-85% (128-145 bpm)'}, { day: 'Sunday', activity: 'Rest Day or Light Yoga', hr: ''} ];
+                        const container = planReveal.querySelector('.space-y-2'); 
+                        container.innerHTML = '';
+                        
+                        for(let i=0; i<planItems.length; i++) {
+                            await new Promise(r => setTimeout(r, 400));
+                            const el = document.createElement('div'); 
+                            el.className = 'plan-reveal-item'; 
+                            el.innerHTML = `<div><div class="day">${planItems[i].day}</div><div class="text-gray-400">${planItems[i].activity}</div></div><div class="text-right"><div class="hr">${planItems[i].hr}</div><div class="check">✓</div></div>`; 
+                            container.appendChild(el); 
+                            await new Promise(r => setTimeout(r, 100));
+                            el.classList.add('checked');
+                        }
+
+                        setTimeout(runPlanGenerationAnimation, 5000);
+                    }
+
+                    let isAnimating = false;
+                    const vo2Observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting && !isAnimating) {
+                                isAnimating = true;
+                                runPlanGenerationAnimation();
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    vo2Observer.observe(vo2PlanScreen);
+                }
+            }
+           
+            // --- Interactive Graph from problem section ---
+            const listItems = document.querySelectorAll('[id^="list-item-"]');
+            listItems.forEach(item => {
+                const marker = document.getElementById(item.id.replace('list-item-', 'marker-'));
+                if (marker) {
+                    item.addEventListener('mouseenter', () => marker.classList.add('highlight'));
+                    item.addEventListener('mouseleave', () => marker.classList.remove('highlight'));
+                }
+            });
+
+            // --- Modal Logic ---
+            const infoModal = document.getElementById('info-modal'), infoModalContent = document.querySelector('.info-modal-content'), closeInfoModalBtn = document.getElementById('close-info-modal-btn'), infoModalTitle = document.getElementById('info-modal-title'), infoModalBody = document.getElementById('info-modal-body');
+            const waitlistModal = document.getElementById('waitlist-modal'), waitlistModalContent = document.querySelector('.waitlist-modal-content'), closeWaitlistModalBtn = document.getElementById('close-waitlist-modal-btn');
+            
+            const openInfoModal = (title, body, value) => {
+                if(!infoModal) return;
+                infoModalTitle.innerText = `${title} (HR: ${value.toFixed(1)})`;
+                infoModalBody.innerText = body;
+                infoModal.classList.remove('hidden');
+                setTimeout(() => infoModalContent.classList.remove('scale-95'), 10);
+            };
+            const closeInfoModal = () => {
+                if(!infoModal) return;
+                infoModalContent.classList.add('scale-95');
+                setTimeout(() => infoModal.classList.add('hidden'), 300);
+            };
+
+            const openWaitlistModal = () => {
+                if(!waitlistModal) return;
+                waitlistModal.classList.remove('hidden');
+                setTimeout(() => waitlistModalContent.classList.remove('scale-95'), 10);
+            };
+            const closeWaitlistModal = () => {
+                if(!waitlistModal) return;
+                waitlistModalContent.classList.add('scale-95');
+                setTimeout(() => waitlistModal.classList.add('hidden'), 300);
+                 // Reset form in modal on close
+                document.getElementById('waitlist-form-container-modal').classList.remove('hidden');
+                document.getElementById('waitlist-thank-you-static-modal').classList.add('hidden');
+            };
+
+            if(closeInfoModalBtn) closeInfoModalBtn.addEventListener('click', closeInfoModal);
+            if(infoModal) infoModal.addEventListener('click', (e) => { if (e.target === infoModal) closeInfoModal(); });
+            
+            document.querySelectorAll('.open-waitlist-modal').forEach(btn => btn.addEventListener('click', openWaitlistModal));
+            if(closeWaitlistModalBtn) closeWaitlistModalBtn.addEventListener('click', closeWaitlistModal);
+            if(waitlistModal) waitlistModal.addEventListener('click', (e) => { if (e.target === waitlistModal) closeWaitlistModal(); });
+
+            document.addEventListener('keydown', (e) => { 
+                if (e.key === "Escape") {
+                    if (!infoModal.classList.contains('hidden')) closeInfoModal();
+                    if (!waitlistModal.classList.contains('hidden')) closeWaitlistModal();
+                    if (document.getElementById('obesity-info-modal').classList.contains('active')) {
+                        document.getElementById('obesity-info-modal').classList.remove('active');
+                    }
+                }
+            });
+
+            // --- Waitlist Form Submission ---
+            document.querySelectorAll('.waitlist-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const currentForm = e.target;
+                    const isModalForm = currentForm.closest('#waitlist-modal');
+                    
+                    const formContainer = isModalForm ? document.getElementById('waitlist-form-container-modal') : document.getElementById('waitlist-form-container');
+                    const thankYouContainer = isModalForm ? document.getElementById('waitlist-thank-you-static-modal') : document.getElementById('waitlist-thank-you-static');
+
+                    fetch(currentForm.action, { method: currentForm.method, body: new FormData(currentForm), headers: { 'Accept': 'application/json' } })
+                    .then(response => {
+                        if (response.ok) {
+                            formContainer.classList.add('hidden');
+                            thankYouContainer.classList.remove('hidden');
+                        } else {
+                            response.json().then(data => { 
+                                console.error(data.errors ? data.errors.map(err => err.message).join(", ") : 'Oops! There was a problem submitting your form');
+                            });
+                        }
+                    }).catch(() => {
+                        console.error('Oops! There was a network problem submitting your form');
+                    });
+                });
+            });
+
+            // --- NEW Abdominal Obesity Infographic Script ---
+            function initObesityAnimation() {
+                const section = document.getElementById('obesity-infographic');
+                if (!section) return;
+
+                const riskData = {
+                    hypertension: { label: "Hypertension", angle: 0, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.2 20.9a.9.9 0 0 0 1.6 0l4.7-7.4A6.5 6.5 0 0 0 13 4.1V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v.1a6.5 6.5 0 0 0-5.5 9.4l4.7 7.4Z"/></svg>`, description: "Often called the 'silent killer,' hypertension is high blood pressure. Visceral fat releases hormones and inflammatory signals that constrict blood vessels and cause the body to retain salt and water, forcing the heart to work harder and damaging artery walls over time." },
+                    diabetes: { label: "Diabetes", angle: 30, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 12H18L15 21l-6-18L6 12H2.5"/></svg>`, description: "Abdominal obesity is a primary driver of insulin resistance, where cells stop responding properly to insulin. This leads to high blood sugar levels, progressing from pre-diabetes to full-blown Type 2 Diabetes, which damages nerves, blood vessels, kidneys, and eyes." },
+                    fatty_liver: { label: "Fatty Liver Disease", angle: 60, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>`, description: "Non-alcoholic fatty liver disease (NAFLD) is the buildup of excess fat in liver cells. Driven by insulin resistance, it can progress to liver inflammation (NASH), scarring (cirrhosis), and even liver failure." },
+                    heart_failure: { label: "Heart Failure", angle: 90, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>`, description: "Visceral fat contributes to a specific type of heart failure (HFpEF) where the heart muscle becomes thick and stiff from years of battling high blood pressure and inflammation, losing its ability to relax and fill properly with blood." },
+                    sleep_apnoea: { label: "Sleep Apnoea", angle: 120, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/><path d="M12 2a10 10 0 1 0 10 10"/></svg>`, description: "Obstructive Sleep Apnoea occurs when excess fat tissue around the neck and throat collapses the airway during sleep. This starves the body of oxygen and dramatically increases the risk of high blood pressure, heart attack, and stroke." },
+                    pcos: { label: "PCOS", angle: 150, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>`, description: "Polycystic Ovary Syndrome is a hormonal disorder in women, strongly linked with the insulin resistance driven by abdominal obesity. This creates a vicious cycle that can affect fertility, metabolism, and long-term health." },
+                    sympathetic_activation: { label: "Sympathetic Activation", angle: 180, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>`, description: "Abdominal obesity over-activates the 'fight or flight' nervous system. This leads to a chronically elevated heart rate (tachycardia) and higher blood pressure, putting constant, unnecessary stress on the entire cardiovascular system." },
+                    hyperuricaemia: { label: "Hyperuricaemia", angle: 210, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.2 2.2c-1.3 1.3-1 3.4.5 4.9"/><path d="m14 6-.9.9c-1.3 1.2-1.2 3.4.1 4.7"/><path d="m6.5 12.5 1 1c1.3 1.2 3.4 1.2 4.7 0l4.6-4.6c1.2-1.2 1.2-3.3 0-4.6l-1-1"/><path d="m7.5 11.5 1 1c1.2 1.3 3.3 1.3 4.6 0l4.6-4.6c1.3-1.2 1.3-3.3 0-4.6l-1-1"/><path d="M22 12v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h6"/></svg>`, description: "This is a condition of high uric acid in the blood. It's strongly linked to metabolic syndrome and insulin resistance. High levels can lead to gout and may contribute to kidney and cardiovascular disease." },
+                    inflammation: { label: "Chronic Inflammation", angle: 240, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.4 2.2c-1.3 1.3-1 3.4.5 4.9"/><path d="m14 6-.9.9c-1.3 1.2-1.2 3.4.1 4.7"/><path d="m6.5 12.5 1 1c1.3 1.2 3.4 1.2 4.7 0l4.6-4.6c1.2-1.2 1.2-3.3 0-4.6l-1-1"/><path d="m7.5 11.5 1 1c1.2 1.3 3.3 1.3 4.6 0l4.6-4.6c1.3-1.2 1.3-3.3 0-4.6l-1-1"/><path d="M22 12v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h6"/></svg>`, description: "Visceral fat acts like a rogue organ, pumping out inflammatory molecules called cytokines. This creates a state of constant, low-grade inflammation throughout the body, which damages tissues and is a root cause of nearly every chronic disease." },
+                    dyslipidaemia: { label: "Dyslipidaemia", angle: 270, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`, description: "This refers to an unhealthy profile of blood fats, specifically high triglycerides, low 'good' HDL cholesterol, and high levels of small, dense 'bad' LDL cholesterol. This combination massively accelerates the buildup of plaque in arteries (atherosclerosis)." },
+                    kidney_function: { label: "Impaired Kidney Function", angle: 330, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.2 20.9a.9.9 0 0 0 1.6 0l4.7-7.4A6.5 6.5 0 0 0 13 4.1V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v.1a6.5 6.5 0 0 0-5.5 9.4l4.7 7.4Z"/><path d="M12.2 20.9a.9.9 0 0 0 1.6 0l4.7-7.4A6.5 6.5 0 0 0 13 4.1V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v.1a6.5 6.5 0 0 0-5.5 9.4l4.7 7.4Z"/></svg>`, description: "The constant stress of high blood pressure and high blood sugar, both direct consequences of abdominal obesity, are the two leading causes of chronic kidney disease. Over time, they destroy the delicate filtering units in the kidneys." }
+                };
+
+                const nodesContainer = section.querySelector('#nodes-container');
+                const linesSvg = section.querySelector('#lines-svg');
+                const gradientsDefs = section.querySelector('#line-gradients');
+                const modal = document.getElementById('obesity-info-modal');
+                const modalTitle = document.getElementById('obesity-modal-title');
+                const modalIcon = document.getElementById('obesity-modal-icon');
+                const modalText = document.getElementById('obesity-modal-text');
+                const modalCloseBtn = document.getElementById('obesity-modal-close-btn');
+
+                const radiusX = 340;
+                const radiusY = 280;
+                const centerX = 425; 
+                const centerY = 300; 
+                const imageRadius = 125; 
+
+                Object.keys(riskData).forEach((key, index) => {
+                    const data = riskData[key];
+                    const angleRad = (data.angle - 90) * (Math.PI / 180);
+                    
+                    const nodeX = centerX + radiusX * Math.cos(angleRad);
+                    const nodeY = centerY + radiusY * Math.sin(angleRad);
+
+                    const node = document.createElement('div');
+                    node.className = 'risk-node';
+                    node.style.left = `${nodeX - 50}px`;
+                    node.style.top = `${nodeY - 50}px`;
+                    node.style.animationDelay = `${index * 100 + 500}ms`;
+                    node.dataset.key = key;
+                    node.innerHTML = `
+                        <div class="icon-wrapper">${data.icon}</div>
+                        <div class="label">${data.label}</div>
+                    `;
+                    nodesContainer.appendChild(node);
+
+                    const startX = centerX + imageRadius * Math.cos(angleRad);
+                    const startY = centerY + imageRadius * Math.sin(angleRad);
+                    const endX = nodeX;
+                    const endY = nodeY;
+
+                    const gradientId = `grad-${key}`;
+                    const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+                    gradient.setAttribute('id', gradientId);
+                    gradient.setAttribute('x1', startX);
+                    gradient.setAttribute('y1', startY);
+                    gradient.setAttribute('x2', endX);
+                    gradient.setAttribute('y2', endY);
+                    gradient.setAttribute('gradientUnits', 'userSpaceOnUse');
+                    
+                    gradient.innerHTML = `
+                        <stop offset="0%" stop-color="var(--neon-green)" />
+                        <stop offset="40%" stop-color="var(--gradient-yellow)" />
+                        <stop offset="70%" stop-color="var(--gradient-orange)" />
+                        <stop offset="100%" stop-color="var(--gradient-red)" />
+                    `;
+                    gradientsDefs.appendChild(gradient);
+
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    const controlX = startX + (endX - startX) * 0.5;
+                    const controlY = startY;
+                    
+                    line.setAttribute('d', `M ${startX} ${startY} Q ${controlX} ${endY} ${endX} ${endY}`);
+                    line.setAttribute('class', 'connecting-line');
+                    line.setAttribute('stroke', `url(#${gradientId})`);
+                    line.style.animationDelay = `${index * 100}ms`;
+                    linesSvg.appendChild(line);
+                });
+                
+                nodesContainer.addEventListener('click', (e) => {
+                    const node = e.target.closest('.risk-node');
+                    if (node) {
+                        const key = node.dataset.key;
+                        const data = riskData[key];
+                        modalTitle.textContent = data.label;
+                        modalIcon.innerHTML = `<div class="icon-wrapper !w-16 !h-16">${data.icon.replace(/32/g, '40')}</div>`;
+                        modalText.textContent = data.description;
+                        modal.classList.add('active');
+                    }
+                });
+
+                const closeModal = () => {
+                    modal.classList.remove('active');
+                };
+
+                modalCloseBtn.addEventListener('click', closeModal);
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+            }
+
+            initObesityAnimation();
+
+        });
+    </script>
+</body>
+</html>
