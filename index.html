@@ -17,13 +17,6 @@
             --brand-purple: #ae15ce;
             --dark-bg: #050505;
             --card-bg: rgba(22, 22, 25, 0.5);
-            /* Variables for new section */
-            --pop-purple: #a855f7;
-            --text-light: #f0f0f0;
-            --text-muted: #a3a3a3;
-            --gradient-yellow: #facc15;
-            --gradient-orange: #f97316;
-            --gradient-red: #ef4444;
         }
         html {
             scroll-behavior: smooth;
@@ -167,6 +160,15 @@
             border-color: rgba(57, 255, 20, 0.8);
             box-shadow: 0 8px 30px rgba(57, 255, 20, 0.25);
         }
+
+        .quote-hover {
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .quote-hover:hover {
+            color: var(--neon-green);
+            text-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+        }
+
 
         /* --- Transformative Outcomes Section --- */
         .outcome-card {
@@ -342,7 +344,42 @@
         .ai-dots span:nth-child(1) { animation-delay: -0.32s; }
         .ai-dots span:nth-child(2) { animation-delay: -0.16s; }
         @keyframes ai-pulse { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
-        .report-final-screen { position: absolute; inset: 0; background: #111; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 2rem; border-radius: 1rem; opacity: 0; transition: opacity 1s ease-in-out; pointer-events: none; }
+        
+        /* New Report Graph Screen Styles */
+        #report-graph-screen {
+            position: absolute;
+            inset: 0;
+            background: #111;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 1rem;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            pointer-events: none;
+        }
+        #report-graph-screen.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .vo2-animated-element .graph-line {
+            animation: draw-line 4s 0.5s ease-out forwards;
+        }
+        .vo2-animated-element .marker {
+             animation: fade-in 1s ease-in-out forwards;
+        }
+        .vo2-benefit-item {
+            opacity: 0;
+            transform: translateX(20px);
+            animation: slide-fade-in 0.6s ease-out forwards;
+            cursor: pointer;
+        }
+        .vo2-benefit-item:hover {
+            background-color: rgba(57, 255, 20, 0.1);
+        }
 
         /* Embedded iframe content */
         .embedded-content { width: 100%; height: 100%; border: none; }
@@ -421,154 +458,6 @@
         #trackLongevityScreen .marker-group.animate, #trackLongevityScreen .label-group.animate {
             animation: fade-in 1s ease-out forwards;
         }
-
-        /* --- NEW Abdominal Obesity Infographic Styles --- */
-        #obesity-infographic .frosted-glass-container {
-            background: rgba(27, 27, 27, 0.5);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--neon-green);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            box-shadow: 0 0 40px rgba(57, 255, 20, 0.2);
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        #obesity-infographic .infographic-container {
-            position: relative;
-            width: 100%;
-            max-width: 850px;
-            height: 600px;
-            margin: auto;
-        }
-        #obesity-infographic .central-hub {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 5;
-            text-align: center;
-        }
-        #obesity-infographic .central-hub img {
-            width: 220px;
-            height: auto;
-            filter: drop-shadow(0 0 20px rgba(57, 255, 20, 0.5));
-            animation: pulse-center 5s infinite ease-in-out;
-        }
-        @keyframes pulse-center {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-        #obesity-infographic .risk-node {
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            width: 100px;
-            text-align: center;
-            z-index: 10;
-            opacity: 0;
-            transform: scale(0.5);
-            animation: pop-in 0.5s forwards;
-        }
-        #obesity-infographic .risk-node .icon-wrapper {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 8px;
-            transition: all 0.3s ease;
-            border: 2px solid var(--neon-green);
-            background-color: rgba(57, 255, 20, 0.1);
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
-        }
-        #obesity-infographic .risk-node:hover .icon-wrapper {
-            transform: scale(1.15);
-            background-color: rgba(168, 85, 247, 0.2);
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
-            border-color: var(--pop-purple);
-        }
-        #obesity-infographic .risk-node:hover .icon-wrapper svg {
-            color: var(--pop-purple);
-        }
-        #obesity-infographic .risk-node .icon-wrapper svg {
-            width: 30px;
-            height: 30px;
-            color: var(--neon-green);
-            transition: color 0.3s ease;
-        }
-        #obesity-infographic .risk-node .label {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text-muted);
-            line-height: 1.2;
-        }
-        #obesity-infographic .connecting-line {
-            stroke-width: 2.5;
-            fill: none;
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: draw-line 3s forwards ease-out;
-        }
-        @keyframes pop-in {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        /* Modal Styles for Obesity Infographic */
-        .obesity-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 60; /* Higher z-index */
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .obesity-modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .obesity-modal-content {
-            background-color: #1c1c1c;
-            border: 1px solid var(--neon-green);
-            box-shadow: 0 0 50px rgba(57, 255, 20, 0.5);
-            padding: 2rem;
-            border-radius: 1rem;
-            width: 90%;
-            max-width: 600px;
-            position: relative;
-            transform: scale(0.95) translateY(10px);
-            transition: transform 0.3s ease;
-        }
-        .obesity-modal-overlay.active .obesity-modal-content {
-            transform: scale(1) translateY(0);
-        }
-        .obesity-modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            cursor: pointer;
-            color: var(--text-muted);
-            transition: color 0.2s, transform 0.2s;
-        }
-        .obesity-modal-close:hover {
-            color: var(--text-light);
-            transform: rotate(90deg);
-        }
-
     </style>
 </head>
 <body class="bg-black">
@@ -657,12 +546,28 @@
     <!-- Solution Section -->
     <section id="solution" class="dark-bg py-16 lg:py-20">
         <div class="container mx-auto px-6 text-center">
-             <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4 neon-green-text">The Solution: Stop Majoring in the Minors</h2>
+             <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-white">Stop <span class="text-brand-purple">Majoring</span> in the Minors</h2>
             <div class="max-w-3xl mx-auto">
-                <p class="text-lg text-gray-400 mb-12">The data shows one factor has a <span class="font-bold text-brand-purple">400% greater impact</span> on your risk of dying than anything else. By focusing on this single metric, we can build a powerful defense against chronic disease. Click on a bar to learn more.</p>
+                 <div class="text-lg text-gray-400 mb-12 p-4 rounded-lg transition-all duration-300 quote-hover">
+                    <p class="italic">"I now consider a high VO2 Max Score to be the most potent longevity “drug” in our arsenal, in terms of lifespan and healthspan. The global medical research is unambiguous: A high VO2 Max Score not only delays actual death but also prevents both cognitive and physical decline, better than any other intervention."</p>
+                    <p class="text-right mt-4 text-sm">- Doctor Peter Attia. MD, B.Sc. Author of the #1 New York Times Bestseller, Outlive: The Science & Art of Longevity, and the host of "The Drive" podcast.</p>
+                </div>
             </div>
-            <div class="chart-card p-8 rounded-2xl h-[550px] relative max-w-5xl mx-auto">
-                <canvas id="hazardRatioChart"></canvas>
+            <div class="chart-card p-8 rounded-2xl relative max-w-5xl mx-auto">
+                 <p class="text-white text-center mb-4 text-lg">Hazard Ratios - empirical evidence of what impacts your longevity. Click the graph bars to learn more.</p>
+                <div class="h-[500px]">
+                    <canvas id="hazardRatioChart"></canvas>
+                </div>
+            </div>
+             <div class="max-w-3xl mx-auto mt-12 text-left text-gray-400 space-y-4">
+                <h3 class="text-2xl font-bold text-white text-center">What is a Hazard Ratio?</h3>
+                <p>A Hazard Ratio is a powerful statistical tool used in medical science to compare the risk of an event (like a heart attack or death) happening in one group versus another over time. It gives us a clear, evidence-based way to see which factors have the biggest impact on our health.</p>
+                <ul class="list-disc list-inside space-y-2">
+                    <li>A Hazard Ratio of <span class="font-bold text-yellow-400">1.0</span> is the baseline. It means there's no increased or decreased risk.</li>
+                    <li>A ratio <span class="font-bold text-red-400">greater than 1.0</span> indicates an increased risk. For example, a ratio of 2.0 means the risk is 100% higher.</li>
+                    <li>A ratio <span class="font-bold text-green-400">less than 1.0</span> indicates a protective effect or a reduced risk.</li>
+                </ul>
+                <p>By understanding these ratios, we can stop "majoring in the minors" and focus our efforts on the actions that will have the most profound positive impact on our healthspan and longevity.</p>
             </div>
             <div class="text-center mt-16">
                 <div class="inline-block text-lg font-bold py-4 px-10 rounded-full btn-hero open-waitlist-modal">New Book & Longevity Health Lab</div>
@@ -801,6 +706,45 @@
         </div>
     </section>
     
+    <!-- VO2 Narrative Section -->
+    <section id="vo2-narrative-section" class="dark-bg py-16 lg:py-24">
+        <div class="container mx-auto px-6">
+            <div class="text-center w-full max-w-4xl mx-auto mb-8">
+                <h2 class="text-3xl md:text-4xl font-black text-white">Improving Oxygen Efficiency is <span class="accent-green">Longevity Building</span></h2>
+                <p class="text-gray-400 mt-2 max-w-2xl mx-auto">You get a 50 page personalised Longevity Report four times per year when you join the Longevity Builder Health Lab. Know what is happening with your health status in real time.</p>
+            </div>
+            <div class="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
+                <!-- Graph -->
+                <div class="w-full lg:w-2/3 relative">
+                    <svg id="vo2-main-page-svg" class="w-full" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid meet"></svg>
+                </div>
+                <!-- Side Text -->
+                <div class="w-full lg:w-1/3 space-y-4">
+                    <div class="vo2-benefit-item main-page-benefit flex items-center gap-4 p-3 rounded-lg bg-gray-900/50 transition-all duration-300" data-benefit="cardio">
+                        <div class="w-8 h-8 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-green-400"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg></div>
+                        <div><h3 class="font-semibold text-md text-white">Improved Cardiovascular Health</h3></div>
+                    </div>
+                     <div class="vo2-benefit-item main-page-benefit flex items-center gap-4 p-3 rounded-lg bg-gray-900/50 transition-all duration-300" data-benefit="metabolic">
+                        <div class="w-8 h-8 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-lime-400"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg></div>
+                        <div><h3 class="font-semibold text-md text-white">Enhanced Metabolic Function</h3></div>
+                    </div>
+                    <div class="vo2-benefit-item main-page-benefit flex items-center gap-4 p-3 rounded-lg bg-gray-900/50 transition-all duration-300" data-benefit="cellular">
+                        <div class="w-8 h-8 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-yellow-400"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 9.75h-3.75v-3.75" /><path d="M13.5 3.75v6h6" stroke-linecap="round" stroke-linejoin="round" /><path stroke-linecap="round" stroke-linejoin="round" d="M3 12a9 9 0 1015.26-6.86" /></svg></div>
+                        <div><h3 class="font-semibold text-md text-white">Increased Cellular Efficiency</h3></div>
+                    </div>
+                     <div class="vo2-benefit-item main-page-benefit flex items-center gap-4 p-3 rounded-lg bg-gray-900/50 transition-all duration-300" data-benefit="inflammation">
+                        <div class="w-8 h-8 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-orange-500"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21a8.25 8.25 0 01-5.962-14.953A8.257 8.257 0 0112 3a8.257 8.257 0 013.362 2.214z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 18a6 6 0 006-6M12 6a6 6 0 00-6 6" /></svg></div>
+                        <div><h3 class="font-semibold text-md text-white">Reduced Systemic Inflammation</h3></div>
+                    </div>
+                    <div class="vo2-benefit-item main-page-benefit flex items-center gap-4 p-3 rounded-lg bg-gray-900/50 transition-all duration-300" data-benefit="brain">
+                        <div class="w-8 h-8 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-red-500"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.25 12l.813-2.846a2.25 2.25 0 011.546-1.546L21.75 6.75l-1.141-.406a2.25 2.25 0 01-1.546-1.546L18.25 2.25l-.813 2.846a2.25 2.25 0 01-1.546 1.546L14.25 7.5l1.141.406a2.25 2.25 0 011.546 1.546L18.25 12z" /></svg></div>
+                        <div><h3 class="font-semibold text-md text-white">Better Brain Health</h3></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Health Lab Section -->
     <section id="health-lab" class="dark-bg py-16 lg:py-24">
         <div class="container mx-auto px-6">
@@ -933,9 +877,40 @@
                                     <h3 class="text-2xl font-bold text-white mb-4">Generate My Personal Longevity Report</h3>
                                     <div class="ai-dots"><span></span><span></span><span></span></div>
                                 </div>
-                                <div id="report-final-screen" class="report-final-screen">
-                                    <img src="https://i.imgur.com/rMOofjo.png" alt="Beating Heart" class="w-48 h-auto mb-6 heart-image" onerror="this.onerror=null;this.src='https://placehold.co/192x192/111111/FFFFFF?text=Heart';">
-                                    <h2 class="text-4xl font-black text-white">Get your full <span class="text-brand-purple">Longevity Report</span> inside the lab.</h2>
+                                <div id="report-graph-screen" class="report-final-screen flex-col items-center justify-center p-4 lg:p-8">
+                                     <div class="text-center w-full max-w-4xl mx-auto">
+                                        <h2 class="text-3xl md:text-4xl font-black text-white">Get Your Personal <span class="accent-green">Longevity Report</span> Inside The Lab</h2>
+                                        <p class="text-gray-400 mt-2 mb-8 max-w-2xl mx-auto">You get a 50 page personalised Longevity Report four times per year when you join the Longevity Builder Health Lab. Know what is happening with your health status in real time.</p>
+                                    </div>
+                                    <div class="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
+                                        <!-- Graph -->
+                                        <div class="w-full lg:w-2/3 relative">
+                                            <svg id="vo2-report-svg" class="w-full" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid meet"></svg>
+                                        </div>
+                                        <!-- Side Text -->
+                                        <div class="w-full lg:w-1/3 space-y-4">
+                                            <div class="vo2-benefit-item flex items-center gap-4 p-3 rounded-lg bg-gray-900/50 transition-all duration-300" data-benefit="cardio">
+                                                <div class="w-8 h-8 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-green-400"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg></div>
+                                                <div><h3 class="font-semibold text-md text-white">Improved Cardiovascular Health</h3></div>
+                                            </div>
+                                             <div class="vo2-benefit-item flex items-center gap-4 p-3 rounded-lg bg-gray-900/50 transition-all duration-300" data-benefit="metabolic">
+                                                <div class="w-8 h-8 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-lime-400"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg></div>
+                                                <div><h3 class="font-semibold text-md text-white">Enhanced Metabolic Function</h3></div>
+                                            </div>
+                                            <div class="vo2-benefit-item flex items-center gap-4 p-3 rounded-lg bg-gray-900/50 transition-all duration-300" data-benefit="cellular">
+                                                <div class="w-8 h-8 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-yellow-400"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 9.75h-3.75v-3.75" /><path d="M13.5 3.75v6h6" stroke-linecap="round" stroke-linejoin="round" /><path stroke-linecap="round" stroke-linejoin="round" d="M3 12a9 9 0 1015.26-6.86" /></svg></div>
+                                                <div><h3 class="font-semibold text-md text-white">Increased Cellular Efficiency</h3></div>
+                                            </div>
+                                             <div class="vo2-benefit-item flex items-center gap-4 p-3 rounded-lg bg-gray-900/50 transition-all duration-300" data-benefit="inflammation">
+                                                <div class="w-8 h-8 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-orange-500"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21a8.25 8.25 0 01-5.962-14.953A8.257 8.257 0 0112 3a8.257 8.257 0 013.362 2.214z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 18a6 6 0 006-6M12 6a6 6 0 00-6 6" /></svg></div>
+                                                <div><h3 class="font-semibold text-md text-white">Reduced Systemic Inflammation</h3></div>
+                                            </div>
+                                            <div class="vo2-benefit-item flex items-center gap-4 p-3 rounded-lg bg-gray-900/50 transition-all duration-300" data-benefit="brain">
+                                                <div class="w-8 h-8 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full text-red-500"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.25 12l.813-2.846a2.25 2.25 0 011.546-1.546L21.75 6.75l-1.141-.406a2.25 2.25 0 01-1.546-1.546L18.25 2.25l-.813 2.846a2.25 2.25 0 01-1.546 1.546L14.25 7.5l1.141.406a2.25 2.25 0 011.546 1.546L18.25 12z" /></svg></div>
+                                                <div><h3 class="font-semibold text-md text-white">Better Brain Health</h3></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div id="report-cursor"></div>
@@ -1066,33 +1041,6 @@
         </div>
     </section>
 
-    <!-- Abdominal Obesity Section -->
-    <section id="obesity-infographic" class="dark-bg py-16 lg:py-24">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12 md:mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Tried Everything to Lose Weight? You're Asking the Wrong Question.</h2>
-                <p class="max-w-3xl mx-auto text-gray-300 text-lg">It's not about the next diet. It's about your body's "Oxygen Efficiency." Unlock the secret to a high-performance metabolism and learn why building a better engine is the true key to sustainable weight management. Longevity Builder has a brand new (simple) approach to weight loss.</p>
-            </div>
-            <div class="frosted-glass-container">
-                <div class="text-center mb-10">
-                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight" style="color: var(--text-light);">The Dangers of Abdominal Obesity</h1>
-                    <p class="mt-3 text-base max-w-2xl mx-auto" style="color: var(--neon-green);">Click an icon to learn more.</p>
-                </div>
-                <div class="infographic-container">
-                    <svg class="absolute top-0 left-0 w-full h-full" id="lines-svg">
-                        <defs id="line-gradients"></defs>
-                    </svg>
-                    <div class="central-hub">
-                         <div class="main-icon">
-                            <img src="https://i.imgur.com/AND4kCn.png" alt="Anatomical illustration of abdominal fat around organs" onerror="this.onerror=null;this.src='https://placehold.co/220x330/1a1a1a/f0f0f0?text=Image+Not+Found';">
-                        </div>
-                    </div>
-                    <div id="nodes-container"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- FAQ Section -->
     <section id="faq" class="section-bg py-16 lg:py-24">
         <div class="container mx-auto px-6 max-w-3xl">
@@ -1151,6 +1099,16 @@
             <p id="info-modal-body" class="text-gray-300"></p>
         </div>
     </div>
+    
+    <!-- VO2 Benefit Modal -->
+    <div id="vo2-benefit-modal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div class="info-modal-content w-full max-w-lg p-8 rounded-2xl text-white transform scale-95 transition-transform duration-300 relative">
+            <button id="close-vo2-benefit-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition text-3xl leading-none">&times;</button>
+            <h3 id="vo2-benefit-modal-title" class="text-2xl font-bold mb-4 accent-green"></h3>
+            <p id="vo2-benefit-modal-body" class="text-gray-300"></p>
+        </div>
+    </div>
+
 
     <!-- Waitlist Modal -->
     <div id="waitlist-modal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
@@ -1173,21 +1131,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Obesity Info Modal -->
-    <div id="obesity-info-modal" class="obesity-modal-overlay">
-        <div class="obesity-modal-content">
-            <div id="obesity-modal-close-btn" class="obesity-modal-close">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </div>
-            <div class="flex items-center mb-4">
-                 <div id="obesity-modal-icon" class="mr-4"></div>
-                 <h3 id="obesity-modal-title" class="text-2xl font-bold" style="color: var(--neon-green);"></h3>
-            </div>
-            <p id="obesity-modal-text" class="text-gray-300"></p>
-        </div>
-    </div>
-
 
     <!-- Footer -->
     <footer class="dark-bg py-12">
@@ -1629,7 +1572,7 @@
                 if (reportScreen) {
                     const reportFormContainer = document.getElementById('report-form-container');
                     const generatingPopup = document.getElementById('generating-popup');
-                    const finalScreen = document.getElementById('report-final-screen');
+                    const graphScreen = document.getElementById('report-graph-screen');
                     const cursor = document.getElementById('report-cursor');
 
                     const fields = [
@@ -1651,8 +1594,7 @@
                         reportFormContainer.style.opacity = 1;
                         generatingPopup.style.opacity = 0;
                         generatingPopup.style.pointerEvents = 'none';
-                        finalScreen.style.opacity = 0;
-                        finalScreen.style.pointerEvents = 'none';
+                        graphScreen.classList.remove('visible');
                         fields.forEach(f => document.getElementById(f.id).innerHTML = '');
                         cursor.style.display = 'block';
 
@@ -1677,8 +1619,8 @@
                         reportFormContainer.style.opacity = 0;
                         
                         await new Promise(r => setTimeout(r, 500));
-                        finalScreen.style.opacity = 1;
-                        finalScreen.style.pointerEvents = 'auto';
+                        graphScreen.classList.add('visible');
+                        animateVo2ReportGraph(document.getElementById('vo2-report-svg'), document.querySelectorAll('#report-graph-screen .vo2-benefit-item'));
                     }
 
                      const reportObserver = new IntersectionObserver((entries, observer) => {
@@ -1691,6 +1633,162 @@
                     }, { threshold: 0.5 });
                     reportObserver.observe(reportScreen);
                 }
+
+                function animateVo2ReportGraph(svg, benefits) {
+                    if (!svg) return;
+                    
+                    if (svg.dataset.intervalId) {
+                        clearInterval(parseInt(svg.dataset.intervalId));
+                    }
+
+                    const runAnimationCycle = () => {
+                        svg.innerHTML = ''; // Clear previous elements
+                        const ns = "http://www.w3.org/2000/svg";
+                        const data = [
+                            { day: 0,   vo2: 28 },
+                            { day: 90,  vo2: 33 },
+                            { day: 180, vo2: 38 },
+                            { day: 270, vo2: 42 },
+                            { day: 365, vo2: 48 }
+                        ];
+                        benefits.forEach(b => {
+                            b.style.opacity = 0;
+                            b.style.animation = 'none';
+                        });
+
+                        const svgWidth = 600;
+                        const svgHeight = 400;
+                        const padding = { top: 40, right: 20, bottom: 50, left: 50 };
+                        const chartWidth = svgWidth - padding.left - padding.right;
+                        const chartHeight = svgHeight - padding.top - padding.bottom;
+
+                        const xScale = (day) => padding.left + (day / 365) * chartWidth;
+                        const yScale = (vo2) => padding.top + chartHeight - ((vo2 - 25) / (50 - 25)) * chartHeight;
+
+                        const defs = document.createElementNS(ns, 'defs');
+                        defs.innerHTML = `
+                            <linearGradient id="vo2ReportGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+                                <stop offset="0%" style="stop-color:var(--brand-purple);" />
+                                <stop offset="100%" style="stop-color:var(--neon-green);" />
+                            </linearGradient>
+                            <filter id="vo2ReportGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        `;
+                        svg.appendChild(defs);
+
+                        const axesGroup = document.createElementNS(ns, 'g');
+                        axesGroup.innerHTML = `
+                            <line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${padding.top + chartHeight}" stroke="#4a5568" stroke-width="1"/>
+                            <text x="${padding.left - 15}" y="${padding.top + chartHeight / 2}" fill="#a0aec0" font-size="10" transform="rotate(-90 ${padding.left - 15} ${padding.top + chartHeight / 2})" text-anchor="middle" class="uppercase tracking-widest">VO2 Max Score (Oxygen Efficiency)</text>
+                            <line x1="${padding.left}" y1="${padding.top + chartHeight}" x2="${padding.left + chartWidth}" y2="${padding.top + chartHeight}" stroke="#4a5568" stroke-width="1"/>
+                            <text x="${padding.left + chartWidth / 2}" y="${svgHeight - 5}" fill="#a0aec0" font-size="12" text-anchor="middle" class="uppercase tracking-widest">Time Spent Using Longevity Builder</text>
+                        `;
+                        svg.appendChild(axesGroup);
+
+                        const animatedContainer = document.createElementNS(ns, 'g');
+                        animatedContainer.classList.add('vo2-animated-element');
+                        svg.appendChild(animatedContainer);
+
+                        const path = document.createElementNS(ns, 'path');
+                        const points = data.map(d => `${xScale(d.day)},${yScale(d.vo2)}`);
+                        let pathData = `M ${points[0]}`;
+                        for (let i = 1; i < points.length; i++) {
+                            const prevPoint = data[i - 1];
+                            const currentPoint = data[i];
+                            const cp1x = xScale(prevPoint.day + (currentPoint.day - prevPoint.day) / 3);
+                            const cp1y = yScale(prevPoint.vo2);
+                            const cp2x = xScale(currentPoint.day - (currentPoint.day - prevPoint.day) / 3);
+                            const cp2y = yScale(currentPoint.vo2);
+                            pathData += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${points[i]}`;
+                        }
+                        path.setAttribute('d', pathData);
+                        path.setAttribute('stroke', 'url(#vo2ReportGradient)');
+                        path.setAttribute('stroke-width', '4');
+                        path.setAttribute('fill', 'none');
+                        path.setAttribute('filter', 'url(#vo2ReportGlow)');
+                        path.setAttribute('stroke-linecap', 'round');
+                        path.classList.add('graph-line');
+                        animatedContainer.appendChild(path);
+
+                        data.forEach((d, i) => {
+                            if (i === 0) return;
+                            const x = xScale(d.day);
+                            const y = yScale(d.vo2);
+                            
+                            const line = document.createElementNS(ns, 'line');
+                            line.setAttribute('x1', x); line.setAttribute('y1', y);
+                            line.setAttribute('x2', x); line.setAttribute('y2', padding.top + chartHeight);
+                            line.setAttribute('stroke', '#4a5568'); line.setAttribute('stroke-width', '1');
+                            line.setAttribute('stroke-dasharray', '4 4');
+
+                            const circle = document.createElementNS(ns, 'circle');
+                            circle.setAttribute('cx', x); circle.setAttribute('cy', y);
+                            circle.setAttribute('r', '8'); circle.setAttribute('fill', '#000');
+                            circle.setAttribute('stroke', 'var(--neon-green)'); circle.setAttribute('stroke-width', '3');
+                            
+                            const innerCircle = document.createElementNS(ns, 'circle');
+                            innerCircle.setAttribute('cx', x); innerCircle.setAttribute('cy', y);
+                            innerCircle.setAttribute('r', '4'); innerCircle.setAttribute('fill', 'var(--neon-green)');
+
+                            const vo2Text = document.createElementNS(ns, 'text');
+                            vo2Text.textContent = `${d.vo2}ml/kg/min`;
+                            vo2Text.setAttribute('x', x); vo2Text.setAttribute('y', y - 15);
+                            vo2Text.setAttribute('fill', '#a0aec0'); vo2Text.setAttribute('font-size', '11');
+                            vo2Text.setAttribute('font-family', 'Roboto Mono, monospace'); vo2Text.setAttribute('text-anchor', 'middle');
+
+                            const markerGroup = document.createElementNS(ns, 'g');
+                            markerGroup.classList.add('marker');
+                            markerGroup.style.animationDelay = `${i * 0.8 + 0.5}s`;
+                            markerGroup.appendChild(line);
+                            markerGroup.appendChild(circle);
+                            markerGroup.appendChild(innerCircle);
+                            markerGroup.appendChild(vo2Text);
+                            animatedContainer.appendChild(markerGroup);
+
+                            const xLabel = document.createElementNS(ns, 'text');
+                            xLabel.textContent = `${d.day} days`;
+                            xLabel.setAttribute('x', x);
+                            xLabel.setAttribute('y', padding.top + chartHeight + 20);
+                            xLabel.setAttribute('fill', '#a0aec0');
+                            xLabel.setAttribute('font-size', '12');
+                            xLabel.setAttribute('text-anchor', 'middle');
+                            xLabel.classList.add('marker');
+                            xLabel.style.animationDelay = `${i * 0.8 + 0.5}s`;
+                            animatedContainer.appendChild(xLabel);
+                        });
+                        
+                        benefits.forEach((benefit, index) => {
+                            setTimeout(() => {
+                                benefit.style.animation = `slide-fade-in 0.6s ease-out forwards`;
+                            }, 1500 + index * 200);
+                        });
+                    };
+
+                    runAnimationCycle();
+                    const intervalId = setInterval(runAnimationCycle, 8000); // 4.5s animation + 3.5s pause
+                    svg.dataset.intervalId = intervalId;
+                }
+
+                // --- Main Page VO2 Narrative Graph ---
+                const vo2NarrativeSection = document.getElementById('vo2-narrative-section');
+                if (vo2NarrativeSection) {
+                    const mainPageGraphObserver = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                animateVo2ReportGraph(document.getElementById('vo2-main-page-svg'), document.querySelectorAll('#vo2-narrative-section .vo2-benefit-item'));
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.5 });
+
+                    mainPageGraphObserver.observe(vo2NarrativeSection);
+                }
+
 
                 // --- Medicine 3.0 Animation (Slide 5) ---
                 const medicine3Screen = document.getElementById('medicine3Screen');
@@ -1821,28 +1919,29 @@
             // --- Modal Logic ---
             const infoModal = document.getElementById('info-modal'), infoModalContent = document.querySelector('.info-modal-content'), closeInfoModalBtn = document.getElementById('close-info-modal-btn'), infoModalTitle = document.getElementById('info-modal-title'), infoModalBody = document.getElementById('info-modal-body');
             const waitlistModal = document.getElementById('waitlist-modal'), waitlistModalContent = document.querySelector('.waitlist-modal-content'), closeWaitlistModalBtn = document.getElementById('close-waitlist-modal-btn');
+            const vo2BenefitModal = document.getElementById('vo2-benefit-modal'), closeVo2BenefitModalBtn = document.getElementById('close-vo2-benefit-modal-btn');
             
             const openInfoModal = (title, body, value) => {
                 if(!infoModal) return;
                 infoModalTitle.innerText = `${title} (HR: ${value.toFixed(1)})`;
                 infoModalBody.innerText = body;
                 infoModal.classList.remove('hidden');
-                setTimeout(() => infoModalContent.classList.remove('scale-95'), 10);
+                setTimeout(() => infoModal.querySelector('.info-modal-content').classList.remove('scale-95'), 10);
             };
             const closeInfoModal = () => {
                 if(!infoModal) return;
-                infoModalContent.classList.add('scale-95');
+                infoModal.querySelector('.info-modal-content').classList.add('scale-95');
                 setTimeout(() => infoModal.classList.add('hidden'), 300);
             };
 
             const openWaitlistModal = () => {
                 if(!waitlistModal) return;
                 waitlistModal.classList.remove('hidden');
-                setTimeout(() => waitlistModalContent.classList.remove('scale-95'), 10);
+                setTimeout(() => waitlistModal.querySelector('.waitlist-modal-content').classList.remove('scale-95'), 10);
             };
             const closeWaitlistModal = () => {
                 if(!waitlistModal) return;
-                waitlistModalContent.classList.add('scale-95');
+                waitlistModal.querySelector('.waitlist-modal-content').classList.add('scale-95');
                 setTimeout(() => waitlistModal.classList.add('hidden'), 300);
                  // Reset form in modal on close
                 document.getElementById('waitlist-form-container-modal').classList.remove('hidden');
@@ -1856,13 +1955,41 @@
             if(closeWaitlistModalBtn) closeWaitlistModalBtn.addEventListener('click', closeWaitlistModal);
             if(waitlistModal) waitlistModal.addEventListener('click', (e) => { if (e.target === waitlistModal) closeWaitlistModal(); });
 
+            // --- VO2 Benefit Modal Logic ---
+            const benefitContent = {
+                cardio: { title: 'Improved Cardiovascular Health', body: "A higher VO2 max strengthens your heart muscle, allowing it to pump more blood with each beat. It also improves the elasticity of your blood vessels, lowering blood pressure and reducing the strain on your entire cardiovascular system. This leads to a significantly lower risk of heart attack and stroke." },
+                metabolic: { title: 'Enhanced Metabolic Function', body: "Improving oxygen efficiency is key to reversing insulin resistance. Your cells become more sensitive to insulin, allowing them to efficiently pull glucose from the bloodstream for energy. This stabilizes blood sugar, reduces fat storage around your organs, and dramatically lowers your risk for type 2 diabetes and metabolic syndrome." },
+                cellular: { title: 'Increased Cellular Efficiency', body: "VO2 max is a direct measure of your mitochondria's ability to produce energy (ATP) using oxygen. A higher score means you have more numerous and more efficient mitochondria, the powerhouses of your cells. This translates to more energy for daily life and a slower cellular aging process." },
+                inflammation: { title: 'Reduced Systemic Inflammation', body: "Visceral fat, the dangerous fat around your organs, secretes inflammatory proteins. Improving your VO2 max is one of the most effective ways to reduce this fat, thereby lowering chronic, low-grade inflammation throughout the body—a root cause of most age-related diseases." },
+                brain: { title: 'Better Brain Health', body: "Your brain is an energy-hungry organ that relies on a steady supply of oxygen. Increasing your VO2 max enhances blood flow to the brain, promotes the growth of new neurons (neurogenesis), and has been shown to reduce the risk of cognitive decline and dementia by up to 50%." }
+            };
+
+            document.querySelectorAll('.vo2-benefit-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const benefitKey = item.dataset.benefit;
+                    const content = benefitContent[benefitKey];
+                    document.getElementById('vo2-benefit-modal-title').textContent = content.title;
+                    document.getElementById('vo2-benefit-modal-body').textContent = content.body;
+                    vo2BenefitModal.classList.remove('hidden');
+                    setTimeout(() => vo2BenefitModal.querySelector('.info-modal-content').classList.remove('scale-95'), 10);
+                });
+            });
+            
+            const closeVo2BenefitModal = () => {
+                if(!vo2BenefitModal) return;
+                vo2BenefitModal.querySelector('.info-modal-content').classList.add('scale-95');
+                setTimeout(() => vo2BenefitModal.classList.add('hidden'), 300);
+            };
+
+            if(closeVo2BenefitModalBtn) closeVo2BenefitModalBtn.addEventListener('click', closeVo2BenefitModal);
+            if(vo2BenefitModal) vo2BenefitModal.addEventListener('click', (e) => { if (e.target === vo2BenefitModal) closeVo2BenefitModal(); });
+
+
             document.addEventListener('keydown', (e) => { 
                 if (e.key === "Escape") {
                     if (!infoModal.classList.contains('hidden')) closeInfoModal();
                     if (!waitlistModal.classList.contains('hidden')) closeWaitlistModal();
-                    if (document.getElementById('obesity-info-modal').classList.contains('active')) {
-                        document.getElementById('obesity-info-modal').classList.remove('active');
-                    }
+                    if (!vo2BenefitModal.classList.contains('hidden')) closeVo2BenefitModal();
                 }
             });
 
@@ -1891,119 +2018,6 @@
                     });
                 });
             });
-
-            // --- NEW Abdominal Obesity Infographic Script ---
-            function initObesityAnimation() {
-                const section = document.getElementById('obesity-infographic');
-                if (!section) return;
-
-                const riskData = {
-                    hypertension: { label: "Hypertension", angle: 0, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.2 20.9a.9.9 0 0 0 1.6 0l4.7-7.4A6.5 6.5 0 0 0 13 4.1V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v.1a6.5 6.5 0 0 0-5.5 9.4l4.7 7.4Z"/></svg>`, description: "Often called the 'silent killer,' hypertension is high blood pressure. Visceral fat releases hormones and inflammatory signals that constrict blood vessels and cause the body to retain salt and water, forcing the heart to work harder and damaging artery walls over time." },
-                    diabetes: { label: "Diabetes", angle: 30, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 12H18L15 21l-6-18L6 12H2.5"/></svg>`, description: "Abdominal obesity is a primary driver of insulin resistance, where cells stop responding properly to insulin. This leads to high blood sugar levels, progressing from pre-diabetes to full-blown Type 2 Diabetes, which damages nerves, blood vessels, kidneys, and eyes." },
-                    fatty_liver: { label: "Fatty Liver Disease", angle: 60, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>`, description: "Non-alcoholic fatty liver disease (NAFLD) is the buildup of excess fat in liver cells. Driven by insulin resistance, it can progress to liver inflammation (NASH), scarring (cirrhosis), and even liver failure." },
-                    heart_failure: { label: "Heart Failure", angle: 90, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>`, description: "Visceral fat contributes to a specific type of heart failure (HFpEF) where the heart muscle becomes thick and stiff from years of battling high blood pressure and inflammation, losing its ability to relax and fill properly with blood." },
-                    sleep_apnoea: { label: "Sleep Apnoea", angle: 120, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/><path d="M12 2a10 10 0 1 0 10 10"/></svg>`, description: "Obstructive Sleep Apnoea occurs when excess fat tissue around the neck and throat collapses the airway during sleep. This starves the body of oxygen and dramatically increases the risk of high blood pressure, heart attack, and stroke." },
-                    pcos: { label: "PCOS", angle: 150, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>`, description: "Polycystic Ovary Syndrome is a hormonal disorder in women, strongly linked with the insulin resistance driven by abdominal obesity. This creates a vicious cycle that can affect fertility, metabolism, and long-term health." },
-                    sympathetic_activation: { label: "Sympathetic Activation", angle: 180, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>`, description: "Abdominal obesity over-activates the 'fight or flight' nervous system. This leads to a chronically elevated heart rate (tachycardia) and higher blood pressure, putting constant, unnecessary stress on the entire cardiovascular system." },
-                    hyperuricaemia: { label: "Hyperuricaemia", angle: 210, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.2 2.2c-1.3 1.3-1 3.4.5 4.9"/><path d="m14 6-.9.9c-1.3 1.2-1.2 3.4.1 4.7"/><path d="m6.5 12.5 1 1c1.3 1.2 3.4 1.2 4.7 0l4.6-4.6c1.2-1.2 1.2-3.3 0-4.6l-1-1"/><path d="m7.5 11.5 1 1c1.2 1.3 3.3 1.3 4.6 0l4.6-4.6c1.3-1.2 1.3-3.3 0-4.6l-1-1"/><path d="M22 12v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h6"/></svg>`, description: "This is a condition of high uric acid in the blood. It's strongly linked to metabolic syndrome and insulin resistance. High levels can lead to gout and may contribute to kidney and cardiovascular disease." },
-                    inflammation: { label: "Chronic Inflammation", angle: 240, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.4 2.2c-1.3 1.3-1 3.4.5 4.9"/><path d="m14 6-.9.9c-1.3 1.2-1.2 3.4.1 4.7"/><path d="m6.5 12.5 1 1c1.3 1.2 3.4 1.2 4.7 0l4.6-4.6c1.2-1.2 1.2-3.3 0-4.6l-1-1"/><path d="m7.5 11.5 1 1c1.2 1.3 3.3 1.3 4.6 0l4.6-4.6c1.3-1.2 1.3-3.3 0-4.6l-1-1"/><path d="M22 12v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h6"/></svg>`, description: "Visceral fat acts like a rogue organ, pumping out inflammatory molecules called cytokines. This creates a state of constant, low-grade inflammation throughout the body, which damages tissues and is a root cause of nearly every chronic disease." },
-                    dyslipidaemia: { label: "Dyslipidaemia", angle: 270, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`, description: "This refers to an unhealthy profile of blood fats, specifically high triglycerides, low 'good' HDL cholesterol, and high levels of small, dense 'bad' LDL cholesterol. This combination massively accelerates the buildup of plaque in arteries (atherosclerosis)." },
-                    kidney_function: { label: "Impaired Kidney Function", angle: 330, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.2 20.9a.9.9 0 0 0 1.6 0l4.7-7.4A6.5 6.5 0 0 0 13 4.1V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v.1a6.5 6.5 0 0 0-5.5 9.4l4.7 7.4Z"/><path d="M12.2 20.9a.9.9 0 0 0 1.6 0l4.7-7.4A6.5 6.5 0 0 0 13 4.1V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v.1a6.5 6.5 0 0 0-5.5 9.4l4.7 7.4Z"/></svg>`, description: "The constant stress of high blood pressure and high blood sugar, both direct consequences of abdominal obesity, are the two leading causes of chronic kidney disease. Over time, they destroy the delicate filtering units in the kidneys." }
-                };
-
-                const nodesContainer = section.querySelector('#nodes-container');
-                const linesSvg = section.querySelector('#lines-svg');
-                const gradientsDefs = section.querySelector('#line-gradients');
-                const modal = document.getElementById('obesity-info-modal');
-                const modalTitle = document.getElementById('obesity-modal-title');
-                const modalIcon = document.getElementById('obesity-modal-icon');
-                const modalText = document.getElementById('obesity-modal-text');
-                const modalCloseBtn = document.getElementById('obesity-modal-close-btn');
-
-                const radiusX = 340;
-                const radiusY = 280;
-                const centerX = 425; 
-                const centerY = 300; 
-                const imageRadius = 125; 
-
-                Object.keys(riskData).forEach((key, index) => {
-                    const data = riskData[key];
-                    const angleRad = (data.angle - 90) * (Math.PI / 180);
-                    
-                    const nodeX = centerX + radiusX * Math.cos(angleRad);
-                    const nodeY = centerY + radiusY * Math.sin(angleRad);
-
-                    const node = document.createElement('div');
-                    node.className = 'risk-node';
-                    node.style.left = `${nodeX - 50}px`;
-                    node.style.top = `${nodeY - 50}px`;
-                    node.style.animationDelay = `${index * 100 + 500}ms`;
-                    node.dataset.key = key;
-                    node.innerHTML = `
-                        <div class="icon-wrapper">${data.icon}</div>
-                        <div class="label">${data.label}</div>
-                    `;
-                    nodesContainer.appendChild(node);
-
-                    const startX = centerX + imageRadius * Math.cos(angleRad);
-                    const startY = centerY + imageRadius * Math.sin(angleRad);
-                    const endX = nodeX;
-                    const endY = nodeY;
-
-                    const gradientId = `grad-${key}`;
-                    const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-                    gradient.setAttribute('id', gradientId);
-                    gradient.setAttribute('x1', startX);
-                    gradient.setAttribute('y1', startY);
-                    gradient.setAttribute('x2', endX);
-                    gradient.setAttribute('y2', endY);
-                    gradient.setAttribute('gradientUnits', 'userSpaceOnUse');
-                    
-                    gradient.innerHTML = `
-                        <stop offset="0%" stop-color="var(--neon-green)" />
-                        <stop offset="40%" stop-color="var(--gradient-yellow)" />
-                        <stop offset="70%" stop-color="var(--gradient-orange)" />
-                        <stop offset="100%" stop-color="var(--gradient-red)" />
-                    `;
-                    gradientsDefs.appendChild(gradient);
-
-                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                    const controlX = startX + (endX - startX) * 0.5;
-                    const controlY = startY;
-                    
-                    line.setAttribute('d', `M ${startX} ${startY} Q ${controlX} ${endY} ${endX} ${endY}`);
-                    line.setAttribute('class', 'connecting-line');
-                    line.setAttribute('stroke', `url(#${gradientId})`);
-                    line.style.animationDelay = `${index * 100}ms`;
-                    linesSvg.appendChild(line);
-                });
-                
-                nodesContainer.addEventListener('click', (e) => {
-                    const node = e.target.closest('.risk-node');
-                    if (node) {
-                        const key = node.dataset.key;
-                        const data = riskData[key];
-                        modalTitle.textContent = data.label;
-                        modalIcon.innerHTML = `<div class="icon-wrapper !w-16 !h-16">${data.icon.replace(/32/g, '40')}</div>`;
-                        modalText.textContent = data.description;
-                        modal.classList.add('active');
-                    }
-                });
-
-                const closeModal = () => {
-                    modal.classList.remove('active');
-                };
-
-                modalCloseBtn.addEventListener('click', closeModal);
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeModal();
-                    }
-                });
-            }
-
-            initObesityAnimation();
-
         });
     </script>
 </body>
